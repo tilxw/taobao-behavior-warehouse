@@ -1,4 +1,6 @@
 """不需要 Spark 的纯 Python 单元测试。"""
+from pathlib import Path
+
 import pytest
 
 from warehouse import config
@@ -36,3 +38,15 @@ def test_daily_order_respects_same_day_dependencies():
 def test_daily_order_subset_keeps_order():
     names = [t.name for t in daily_order(["ads_traffic_stats_1d", "dws_user_action_1d"])]
     assert names == ["dws_user_action_1d", "ads_traffic_stats_1d"]
+
+
+def test_scrub_local_paths_makes_report_paths_relative():
+    root = config.PROJECT_ROOT
+    homes = str(Path.home().parent)            # macOS 上是用户目录的上一级
+    text = (f"collect at {root}/skew/skew_experiment.py:180 | "
+            f"CatalogFileIndex(1 paths)[file:{root}/spark-warehouse/tb_f..., x] | "
+            f"{homes}/someone/other/file.txt | file:{homes}/a...")
+    out = config.scrub_local_paths(text)
+    assert homes + "/" not in out
+    assert "collect at skew/skew_experiment.py:180" in out
+    assert "[spark-warehouse/tb_f..., x]" in out

@@ -1,5 +1,6 @@
 """全局配置：路径、数据时间窗口、运行环境。"""
 import os
+import re
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -57,6 +58,23 @@ def date_range(start: str, end: str) -> list[str]:
         out.append(cur)
         cur = shift(cur, 1)
     return out
+
+
+# 所有用户主目录的上一级（macOS 是 /Users，Linux 是 /home），用来兜底替换其他用户目录下的路径
+_ANY_HOME = re.compile(re.escape(str(Path.home().parent)) + r"/[^\s/\"'\],)]*")
+
+
+def scrub_local_paths(text: str) -> str:
+    """把文本里的本机绝对路径换成相对项目根目录的路径，入库的报告里不带本机用户名。
+
+    Spark 的 stage 名、执行计划里都会出现绝对路径（如 file:<项目根目录>/spark-warehouse/...）；
+    项目外的路径（或被 Spark 截断、认不出项目根目录的路径）把用户目录换成 ~。
+    """
+    root = str(PROJECT_ROOT)
+    text = text.replace(f"file:{root}/", "").replace(f"{root}/", "").replace(root, ".")
+    home = str(Path.home())
+    text = text.replace(f"file:{home}", "~").replace(home, "~")
+    return _ANY_HOME.sub("~", text)
 
 
 def spark_master() -> str:

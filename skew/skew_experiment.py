@@ -263,7 +263,8 @@ def main():
         summary["agg_results"] = old.get("agg_results", {}) | agg_results
         summary["agg_results_equal"] = len({json.dumps(v, sort_keys=True)
                                             for v in summary["agg_results"].values()}) <= 1
-    out.write_text(json.dumps(summary, ensure_ascii=False, indent=1), encoding="utf-8")
+    # stage 名和执行计划里带本机绝对路径，入库前换成相对项目根目录的路径
+    out.write_text(config.scrub_local_paths(json.dumps(summary, ensure_ascii=False, indent=1)), encoding="utf-8")
     print(f"写入 {out}")
     spark.stop()
 
