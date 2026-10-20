@@ -1,0 +1,4 @@
+pyspark==4.2.0
+pyarrow
+pandas
+pytest
