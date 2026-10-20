@@ -1,0 +1,2203 @@
+{
+ "generated_at": "2026-10-20T19:46:58",
+ "spark_master": "local[8]",
+ "salt_buckets": 16,
+ "dwd_rows": 100095182,
+ "dim_category_rows": 9437,
+ "hottest_category": 4756105,
+ "hottest_category_rows": 4860459,
+ "median_category_rows": 303,
+ "agg_results_equal": true,
+ "agg_results": {
+  "agg_baseline_aqe_off": {
+   "categories": 9437,
+   "cnt": 100095182,
+   "uv_sum": 24191391
+  },
+  "agg_salted_aqe_off": {
+   "categories": 9437,
+   "cnt": 100095182,
+   "uv_sum": 24191391
+  },
+  "agg_baseline_aqe_on": {
+   "categories": 9437,
+   "cnt": 100095182,
+   "uv_sum": 24191391
+  },
+  "agg_salted_aqe_on": {
+   "categories": 9437,
+   "cnt": 100095182,
+   "uv_sum": 24191391
+  }
+ },
+ "runs": [
+  {
+   "name": "agg_baseline_aqe_off",
+   "group": "agg",
+   "conf": {
+    "spark.sql.adaptive.enabled": "false"
+   },
+   "reps": [
+    {
+     "seconds": 12.82,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 17,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 48411,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 696433025,
+       "task_ms_min_p50_p95_max": [
+        1941,
+        2911,
+        3348,
+        3348
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 18,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 35442,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 1006670,
+       "shuffle_write_bytes": 19200028,
+       "task_ms_min_p50_p95_max": [
+        91,
+        169,
+        259,
+        441
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        272142,
+        274834,
+        276638,
+        277377
+       ]
+      },
+      {
+       "stage_id": 19,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 5873,
+       "shuffle_read_records": 1006670,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        19,
+        28,
+        39,
+        43
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        2799,
+        5032,
+        6487,
+        7628
+       ]
+      }
+     ],
+     "plan": "*(3) HashAggregate(keys=[category_id#153L], functions=[count(1), count(distinct user_id#151L)], output=[category_id#153L, cnt#148L, uv#149L])\n+- Exchange hashpartitioning(category_id#153L, 200), ENSURE_REQUIREMENTS, [plan_id=280]\n   +- *(2) HashAggregate(keys=[category_id#153L], functions=[merge_count(1), partial_count(distinct user_id#151L)], output=[category_id#153L, count#161L, count#164L])\n      +- *(2) HashAggregate(keys=[category_id#153L, user_id#151L], functions=[merge_count(1)], output=[category_id#153L, user_id#151L, count#161L])\n         +- Exchange hashpartitioning(category_id#153L, user_id#151L, 200), ENSURE_REQUIREMENTS, [plan_id=275]\n            +- *(1) HashAggregate(keys=[category_id#153L, user_id#151L], functions=[partial_count(1)], output=[category_id#153L, user_id#151L, count#161L])\n               +- *(1) Project [user_id#151L, category_id#153L]\n                  +- *(1) ColumnarToRow\n                     +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#151L,category_id#153L,dt#158] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    },
+    {
+     "seconds": 11.53,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 20,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 43100,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 696433025,
+       "task_ms_min_p50_p95_max": [
+        1728,
+        2541,
+        2866,
+        2866
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 21,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 31345,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 1006670,
+       "shuffle_write_bytes": 19200028,
+       "task_ms_min_p50_p95_max": [
+        100,
+        147,
+        243,
+        278
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        272142,
+        274834,
+        276638,
+        277377
+       ]
+      },
+      {
+       "stage_id": 22,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 5887,
+       "shuffle_read_records": 1006670,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        26,
+        29,
+        32,
+        42
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        2799,
+        5032,
+        6487,
+        7628
+       ]
+      }
+     ],
+     "plan": "*(3) HashAggregate(keys=[category_id#172L], functions=[count(1), count(distinct user_id#170L)], output=[category_id#172L, cnt#167L, uv#168L])\n+- Exchange hashpartitioning(category_id#172L, 200), ENSURE_REQUIREMENTS, [plan_id=344]\n   +- *(2) HashAggregate(keys=[category_id#172L], functions=[merge_count(1), partial_count(distinct user_id#170L)], output=[category_id#172L, count#180L, count#183L])\n      +- *(2) HashAggregate(keys=[category_id#172L, user_id#170L], functions=[merge_count(1)], output=[category_id#172L, user_id#170L, count#180L])\n         +- Exchange hashpartitioning(category_id#172L, user_id#170L, 200), ENSURE_REQUIREMENTS, [plan_id=339]\n            +- *(1) HashAggregate(keys=[category_id#172L, user_id#170L], functions=[partial_count(1)], output=[category_id#172L, user_id#170L, count#180L])\n               +- *(1) Project [user_id#170L, category_id#172L]\n                  +- *(1) ColumnarToRow\n                     +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#170L,category_id#172L,dt#177] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    },
+    {
+     "seconds": 11.81,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 23,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 46093,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 696433025,
+       "task_ms_min_p50_p95_max": [
+        1888,
+        2726,
+        3227,
+        3227
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 24,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 28801,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 1006670,
+       "shuffle_write_bytes": 19200028,
+       "task_ms_min_p50_p95_max": [
+        101,
+        132,
+        230,
+        272
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        272142,
+        274834,
+        276638,
+        277377
+       ]
+      },
+      {
+       "stage_id": 25,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 5881,
+       "shuffle_read_records": 1006670,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        27,
+        29,
+        31,
+        34
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        2799,
+        5032,
+        6487,
+        7628
+       ]
+      }
+     ],
+     "plan": "*(3) HashAggregate(keys=[category_id#191L], functions=[count(1), count(distinct user_id#189L)], output=[category_id#191L, cnt#186L, uv#187L])\n+- Exchange hashpartitioning(category_id#191L, 200), ENSURE_REQUIREMENTS, [plan_id=408]\n   +- *(2) HashAggregate(keys=[category_id#191L], functions=[merge_count(1), partial_count(distinct user_id#189L)], output=[category_id#191L, count#199L, count#202L])\n      +- *(2) HashAggregate(keys=[category_id#191L, user_id#189L], functions=[merge_count(1)], output=[category_id#191L, user_id#189L, count#199L])\n         +- Exchange hashpartitioning(category_id#191L, user_id#189L, 200), ENSURE_REQUIREMENTS, [plan_id=403]\n            +- *(1) HashAggregate(keys=[category_id#191L, user_id#189L], functions=[partial_count(1)], output=[category_id#191L, user_id#189L, count#199L])\n               +- *(1) Project [user_id#189L, category_id#191L]\n                  +- *(1) ColumnarToRow\n                     +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#189L,category_id#191L,dt#196] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    }
+   ]
+  },
+  {
+   "name": "agg_salted_aqe_off",
+   "group": "agg",
+   "conf": {
+    "spark.sql.adaptive.enabled": "false"
+   },
+   "reps": [
+    {
+     "seconds": 17.69,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 26,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 56789,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 917781676,
+       "task_ms_min_p50_p95_max": [
+        2051,
+        3395,
+        3894,
+        3894
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 27,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 33100,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 5918089,
+       "shuffle_write_bytes": 97577433,
+       "task_ms_min_p50_p95_max": [
+        114,
+        153,
+        217,
+        483
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        271760,
+        274749,
+        276730,
+        277763
+       ]
+      },
+      {
+       "stage_id": 28,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 32461,
+       "shuffle_read_records": 5918089,
+       "shuffle_write_records": 118719,
+       "shuffle_write_bytes": 4350207,
+       "task_ms_min_p50_p95_max": [
+        68,
+        163,
+        223,
+        284
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        23896,
+        29530,
+        32574,
+        34954
+       ]
+      },
+      {
+       "stage_id": 29,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 5308,
+       "shuffle_read_records": 118719,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        19,
+        26,
+        33,
+        48
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        385,
+        599,
+        737,
+        810
+       ]
+      }
+     ],
+     "plan": "*(4) HashAggregate(keys=[category_id#213L], functions=[sum(cnt#206L), sum(uv#207L)], output=[category_id#213L, cnt#208L, uv#209L])\n+- Exchange hashpartitioning(category_id#213L, 200), ENSURE_REQUIREMENTS, [plan_id=491]\n   +- *(3) HashAggregate(keys=[category_id#213L], functions=[partial_sum(cnt#206L), partial_sum(uv#207L)], output=[category_id#213L, sum#225L, sum#226L])\n      +- *(3) HashAggregate(keys=[category_id#213L, _groupingexpression#222], functions=[count(1), count(distinct user_id#211L)], output=[category_id#213L, cnt#206L, uv#207L])\n         +- Exchange hashpartitioning(category_id#213L, _groupingexpression#222, 200), ENSURE_REQUIREMENTS, [plan_id=486]\n            +- *(2) HashAggregate(keys=[category_id#213L, _groupingexpression#222], functions=[merge_count(1), partial_count(distinct user_id#211L)], output=[category_id#213L, _groupingexpression#222, count#228L, count#231L])\n               +- *(2) HashAggregate(keys=[category_id#213L, _groupingexpression#222, user_id#211L], functions=[merge_count(1)], output=[category_id#213L, _groupingexpression#222, user_id#211L, count#228L])\n                  +- Exchange hashpartitioning(category_id#213L, _groupingexpression#222, user_id#211L, 200), ENSURE_REQUIREMENTS, [plan_id=481]\n                     +- *(1) HashAggregate(keys=[category_id#213L, _groupingexpression#222, user_id#211L], functions=[partial_count(1)], output=[category_id#213L, _groupingexpression#222, user_id#211L, count#228L])\n                        +- *(1) Project [user_id#211L, category_id#213L, pmod(hash(user_id#211L, 42), 16) AS _groupingexpression#222]\n                           +- *(1) ColumnarToRow\n                              +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#211L,category_id#213L,dt#218] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    },
+    {
+     "seconds": 17.02,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 30,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 50688,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 917781676,
+       "task_ms_min_p50_p95_max": [
+        1951,
+        3089,
+        3409,
+        3409
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 31,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 33275,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 5918089,
+       "shuffle_write_bytes": 97577433,
+       "task_ms_min_p50_p95_max": [
+        107,
+        166,
+        205,
+        269
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        271760,
+        274749,
+        276730,
+        277763
+       ]
+      },
+      {
+       "stage_id": 32,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 32209,
+       "shuffle_read_records": 5918089,
+       "shuffle_write_records": 118719,
+       "shuffle_write_bytes": 4350207,
+       "task_ms_min_p50_p95_max": [
+        96,
+        159,
+        231,
+        240
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        23896,
+        29530,
+        32574,
+        34954
+       ]
+      },
+      {
+       "stage_id": 33,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 5245,
+       "shuffle_read_records": 118719,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        12,
+        26,
+        33,
+        42
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        385,
+        599,
+        737,
+        810
+       ]
+      }
+     ],
+     "plan": "*(4) HashAggregate(keys=[category_id#246L], functions=[sum(cnt#239L), sum(uv#240L)], output=[category_id#246L, cnt#241L, uv#242L])\n+- Exchange hashpartitioning(category_id#246L, 200), ENSURE_REQUIREMENTS, [plan_id=582]\n   +- *(3) HashAggregate(keys=[category_id#246L], functions=[partial_sum(cnt#239L), partial_sum(uv#240L)], output=[category_id#246L, sum#258L, sum#259L])\n      +- *(3) HashAggregate(keys=[category_id#246L, _groupingexpression#255], functions=[count(1), count(distinct user_id#244L)], output=[category_id#246L, cnt#239L, uv#240L])\n         +- Exchange hashpartitioning(category_id#246L, _groupingexpression#255, 200), ENSURE_REQUIREMENTS, [plan_id=577]\n            +- *(2) HashAggregate(keys=[category_id#246L, _groupingexpression#255], functions=[merge_count(1), partial_count(distinct user_id#244L)], output=[category_id#246L, _groupingexpression#255, count#261L, count#264L])\n               +- *(2) HashAggregate(keys=[category_id#246L, _groupingexpression#255, user_id#244L], functions=[merge_count(1)], output=[category_id#246L, _groupingexpression#255, user_id#244L, count#261L])\n                  +- Exchange hashpartitioning(category_id#246L, _groupingexpression#255, user_id#244L, 200), ENSURE_REQUIREMENTS, [plan_id=572]\n                     +- *(1) HashAggregate(keys=[category_id#246L, _groupingexpression#255, user_id#244L], functions=[partial_count(1)], output=[category_id#246L, _groupingexpression#255, user_id#244L, count#261L])\n                        +- *(1) Project [user_id#244L, category_id#246L, pmod(hash(user_id#244L, 42), 16) AS _groupingexpression#255]\n                           +- *(1) ColumnarToRow\n                              +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#244L,category_id#246L,dt#251] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    },
+    {
+     "seconds": 17.09,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 34,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 50170,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 917781676,
+       "task_ms_min_p50_p95_max": [
+        1994,
+        2954,
+        3371,
+        3371
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 35,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 34790,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 5918089,
+       "shuffle_write_bytes": 97577433,
+       "task_ms_min_p50_p95_max": [
+        107,
+        167,
+        282,
+        324
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        271760,
+        274749,
+        276730,
+        277763
+       ]
+      },
+      {
+       "stage_id": 36,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 31913,
+       "shuffle_read_records": 5918089,
+       "shuffle_write_records": 118719,
+       "shuffle_write_bytes": 4350207,
+       "task_ms_min_p50_p95_max": [
+        82,
+        163,
+        205,
+        235
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        23896,
+        29530,
+        32574,
+        34954
+       ]
+      },
+      {
+       "stage_id": 37,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 200,
+       "executor_run_ms": 5193,
+       "shuffle_read_records": 118719,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        20,
+        26,
+        29,
+        33
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        385,
+        599,
+        737,
+        810
+       ]
+      }
+     ],
+     "plan": "*(4) HashAggregate(keys=[category_id#279L], functions=[sum(cnt#272L), sum(uv#273L)], output=[category_id#279L, cnt#274L, uv#275L])\n+- Exchange hashpartitioning(category_id#279L, 200), ENSURE_REQUIREMENTS, [plan_id=673]\n   +- *(3) HashAggregate(keys=[category_id#279L], functions=[partial_sum(cnt#272L), partial_sum(uv#273L)], output=[category_id#279L, sum#291L, sum#292L])\n      +- *(3) HashAggregate(keys=[category_id#279L, _groupingexpression#288], functions=[count(1), count(distinct user_id#277L)], output=[category_id#279L, cnt#272L, uv#273L])\n         +- Exchange hashpartitioning(category_id#279L, _groupingexpression#288, 200), ENSURE_REQUIREMENTS, [plan_id=668]\n            +- *(2) HashAggregate(keys=[category_id#279L, _groupingexpression#288], functions=[merge_count(1), partial_count(distinct user_id#277L)], output=[category_id#279L, _groupingexpression#288, count#294L, count#297L])\n               +- *(2) HashAggregate(keys=[category_id#279L, _groupingexpression#288, user_id#277L], functions=[merge_count(1)], output=[category_id#279L, _groupingexpression#288, user_id#277L, count#294L])\n                  +- Exchange hashpartitioning(category_id#279L, _groupingexpression#288, user_id#277L, 200), ENSURE_REQUIREMENTS, [plan_id=663]\n                     +- *(1) HashAggregate(keys=[category_id#279L, _groupingexpression#288, user_id#277L], functions=[partial_count(1)], output=[category_id#279L, _groupingexpression#288, user_id#277L, count#294L])\n                        +- *(1) Project [user_id#277L, category_id#279L, pmod(hash(user_id#277L, 42), 16) AS _groupingexpression#288]\n                           +- *(1) ColumnarToRow\n                              +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#277L,category_id#279L,dt#284] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    }
+   ]
+  },
+  {
+   "name": "agg_baseline_aqe_on",
+   "group": "agg",
+   "conf": {
+    "spark.sql.adaptive.enabled": "true"
+   },
+   "reps": [
+    {
+     "seconds": 11.64,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 38,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 48984,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 696433025,
+       "task_ms_min_p50_p95_max": [
+        1773,
+        2894,
+        3240,
+        3240
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 40,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 12,
+       "executor_run_ms": 23467,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 93579,
+       "shuffle_write_bytes": 1803094,
+       "task_ms_min_p50_p95_max": [
+        190,
+        2269,
+        2363,
+        2363
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        548331,
+        4946142,
+        4951926,
+        4951926
+       ]
+      },
+      {
+       "stage_id": 43,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 1,
+       "executor_run_ms": 19,
+       "shuffle_read_records": 93579,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        19,
+        19,
+        19,
+        19
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        93579,
+        93579,
+        93579,
+        93579
+       ]
+      }
+     ],
+     "plan": "AdaptiveSparkPlan isFinalPlan=true\n+- == Final Plan ==\n   ResultQueryStage 2\n   +- *(3) HashAggregate(keys=[category_id#309L], functions=[count(1), count(distinct user_id#307L)], output=[category_id#309L, cnt#304L, uv#305L])\n      +- AQEShuffleRead coalesced\n         +- ShuffleQueryStage 1\n            +- Exchange hashpartitioning(category_id#309L, 200), ENSURE_REQUIREMENTS, [plan_id=780]\n               +- *(2) HashAggregate(keys=[category_id#309L], functions=[merge_count(1), partial_count(distinct user_id#307L)], output=[category_id#309L, count#317L, count#320L])\n                  +- *(2) HashAggregate(keys=[category_id#309L, user_id#307L], functions=[merge_count(1)], output=[category_id#309L, user_id#307L, count#317L])\n                     +- AQEShuffleRead coalesced\n                        +- ShuffleQueryStage 0\n                           +- Exchange hashpartitioning(category_id#309L, user_id#307L, 200), ENSURE_REQUIREMENTS, [plan_id=750]\n                              +- *(1) HashAggregate(keys=[category_id#309L, user_id#307L], functions=[partial_count(1)], output=[category_id#309L, user_id#307L, count#317L])\n                                 +- *(1) Project [user_id#307L, category_id#309L]\n                                    +- *(1) ColumnarToRow\n                                       +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#307L,category_id#309L,dt#314] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n+- == Initial Plan ==\n   HashAggregate(keys=[category_id#309L], functions=[count(1), count(distinct user_id#307L)], output=[category_id#309L, cnt#304L, uv#305L])\n   +- Exchange hashpartitioning(category_id#309L, 200), ENSURE_REQUIREMENTS, [plan_id=726]\n      +- HashAggregate(keys=[category_id#309L], functions=[merge_count(1), partial_count(distinct user_id#307L)], output=[category_id#309L, count#317L, count#320L])\n         +- HashAggregate(keys=[category_id#309L, user_id#307L], functions=[merge_count(1)], output=[category_id#309L, user_id#307L, count#317L])\n            +- Exchange hashpartitioning(category_id#309L, user_id#307L, 200), ENSURE_REQUIREMENTS, [plan_id=722]\n               +- HashAggregate(keys=[category_id#309L, user_id#307L], functions=[partial_count(1)], output=[category_id#309L, user_id#307L, count#317L])\n                  +- Project [user_id#307L, category_id#309L]\n                     +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#307L,category_id#309L,dt#314] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    },
+    {
+     "seconds": 11.31,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 44,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 45411,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 696433025,
+       "task_ms_min_p50_p95_max": [
+        1895,
+        2703,
+        3174,
+        3174
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 46,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 12,
+       "executor_run_ms": 24561,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 93579,
+       "shuffle_write_bytes": 1803094,
+       "task_ms_min_p50_p95_max": [
+        193,
+        2338,
+        2493,
+        2493
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        548331,
+        4946142,
+        4951926,
+        4951926
+       ]
+      },
+      {
+       "stage_id": 49,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 1,
+       "executor_run_ms": 19,
+       "shuffle_read_records": 93579,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        19,
+        19,
+        19,
+        19
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        93579,
+        93579,
+        93579,
+        93579
+       ]
+      }
+     ],
+     "plan": "AdaptiveSparkPlan isFinalPlan=true\n+- == Final Plan ==\n   ResultQueryStage 2\n   +- *(3) HashAggregate(keys=[category_id#330L], functions=[count(1), count(distinct user_id#328L)], output=[category_id#330L, cnt#325L, uv#326L])\n      +- AQEShuffleRead coalesced\n         +- ShuffleQueryStage 1\n            +- Exchange hashpartitioning(category_id#330L, 200), ENSURE_REQUIREMENTS, [plan_id=876]\n               +- *(2) HashAggregate(keys=[category_id#330L], functions=[merge_count(1), partial_count(distinct user_id#328L)], output=[category_id#330L, count#338L, count#341L])\n                  +- *(2) HashAggregate(keys=[category_id#330L, user_id#328L], functions=[merge_count(1)], output=[category_id#330L, user_id#328L, count#338L])\n                     +- AQEShuffleRead coalesced\n                        +- ShuffleQueryStage 0\n                           +- Exchange hashpartitioning(category_id#330L, user_id#328L, 200), ENSURE_REQUIREMENTS, [plan_id=846]\n                              +- *(1) HashAggregate(keys=[category_id#330L, user_id#328L], functions=[partial_count(1)], output=[category_id#330L, user_id#328L, count#338L])\n                                 +- *(1) Project [user_id#328L, category_id#330L]\n                                    +- *(1) ColumnarToRow\n                                       +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#328L,category_id#330L,dt#335] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n+- == Initial Plan ==\n   HashAggregate(keys=[category_id#330L], functions=[count(1), count(distinct user_id#328L)], output=[category_id#330L, cnt#325L, uv#326L])\n   +- Exchange hashpartitioning(category_id#330L, 200), ENSURE_REQUIREMENTS, [plan_id=822]\n      +- HashAggregate(keys=[category_id#330L], functions=[merge_count(1), partial_count(distinct user_id#328L)], output=[category_id#330L, count#338L, count#341L])\n         +- HashAggregate(keys=[category_id#330L, user_id#328L], functions=[merge_count(1)], output=[category_id#330L, user_id#328L, count#338L])\n            +- Exchange hashpartitioning(category_id#330L, user_id#328L, 200), ENSURE_REQUIREMENTS, [plan_id=818]\n               +- HashAggregate(keys=[category_id#330L, user_id#328L], functions=[partial_count(1)], output=[category_id#330L, user_id#328L, count#338L])\n                  +- Project [user_id#328L, category_id#330L]\n                     +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#328L,category_id#330L,dt#335] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    },
+    {
+     "seconds": 11.2,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 50,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 44723,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 696433025,
+       "task_ms_min_p50_p95_max": [
+        1842,
+        2616,
+        2935,
+        2935
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 52,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 12,
+       "executor_run_ms": 24514,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 93579,
+       "shuffle_write_bytes": 1803094,
+       "task_ms_min_p50_p95_max": [
+        175,
+        2408,
+        2431,
+        2431
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        548331,
+        4946142,
+        4951926,
+        4951926
+       ]
+      },
+      {
+       "stage_id": 55,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 1,
+       "executor_run_ms": 20,
+       "shuffle_read_records": 93579,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        20,
+        20,
+        20,
+        20
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        93579,
+        93579,
+        93579,
+        93579
+       ]
+      }
+     ],
+     "plan": "AdaptiveSparkPlan isFinalPlan=true\n+- == Final Plan ==\n   ResultQueryStage 2\n   +- *(3) HashAggregate(keys=[category_id#351L], functions=[count(1), count(distinct user_id#349L)], output=[category_id#351L, cnt#346L, uv#347L])\n      +- AQEShuffleRead coalesced\n         +- ShuffleQueryStage 1\n            +- Exchange hashpartitioning(category_id#351L, 200), ENSURE_REQUIREMENTS, [plan_id=972]\n               +- *(2) HashAggregate(keys=[category_id#351L], functions=[merge_count(1), partial_count(distinct user_id#349L)], output=[category_id#351L, count#359L, count#362L])\n                  +- *(2) HashAggregate(keys=[category_id#351L, user_id#349L], functions=[merge_count(1)], output=[category_id#351L, user_id#349L, count#359L])\n                     +- AQEShuffleRead coalesced\n                        +- ShuffleQueryStage 0\n                           +- Exchange hashpartitioning(category_id#351L, user_id#349L, 200), ENSURE_REQUIREMENTS, [plan_id=942]\n                              +- *(1) HashAggregate(keys=[category_id#351L, user_id#349L], functions=[partial_count(1)], output=[category_id#351L, user_id#349L, count#359L])\n                                 +- *(1) Project [user_id#349L, category_id#351L]\n                                    +- *(1) ColumnarToRow\n                                       +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#349L,category_id#351L,dt#356] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n+- == Initial Plan ==\n   HashAggregate(keys=[category_id#351L], functions=[count(1), count(distinct user_id#349L)], output=[category_id#351L, cnt#346L, uv#347L])\n   +- Exchange hashpartitioning(category_id#351L, 200), ENSURE_REQUIREMENTS, [plan_id=918]\n      +- HashAggregate(keys=[category_id#351L], functions=[merge_count(1), partial_count(distinct user_id#349L)], output=[category_id#351L, count#359L, count#362L])\n         +- HashAggregate(keys=[category_id#351L, user_id#349L], functions=[merge_count(1)], output=[category_id#351L, user_id#349L, count#359L])\n            +- Exchange hashpartitioning(category_id#351L, user_id#349L, 200), ENSURE_REQUIREMENTS, [plan_id=914]\n               +- HashAggregate(keys=[category_id#351L, user_id#349L], functions=[partial_count(1)], output=[category_id#351L, user_id#349L, count#359L])\n                  +- Project [user_id#349L, category_id#351L]\n                     +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#349L,category_id#351L,dt#356] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    }
+   ]
+  },
+  {
+   "name": "agg_salted_aqe_on",
+   "group": "agg",
+   "conf": {
+    "spark.sql.adaptive.enabled": "true"
+   },
+   "reps": [
+    {
+     "seconds": 11.65,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 56,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 50062,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 917781676,
+       "task_ms_min_p50_p95_max": [
+        2073,
+        2989,
+        3403,
+        3403
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 58,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 15,
+       "executor_run_ms": 25252,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 1151871,
+       "shuffle_write_bytes": 19440311,
+       "task_ms_min_p50_p95_max": [
+        793,
+        1577,
+        2044,
+        2044
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        1926074,
+        3845054,
+        3856248,
+        3856248
+       ]
+      },
+      {
+       "stage_id": 61,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 1,
+       "executor_run_ms": 207,
+       "shuffle_read_records": 1151871,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 183574,
+       "task_ms_min_p50_p95_max": [
+        207,
+        207,
+        207,
+        207
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        1151871,
+        1151871,
+        1151871,
+        1151871
+       ]
+      },
+      {
+       "stage_id": 65,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 1,
+       "executor_run_ms": 3,
+       "shuffle_read_records": 9437,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        3,
+        3,
+        3,
+        3
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        9437,
+        9437,
+        9437,
+        9437
+       ]
+      }
+     ],
+     "plan": "AdaptiveSparkPlan isFinalPlan=true\n+- == Final Plan ==\n   ResultQueryStage 3\n   +- *(4) HashAggregate(keys=[category_id#375L], functions=[sum(cnt#368L), sum(uv#369L)], output=[category_id#375L, cnt#370L, uv#371L])\n      +- AQEShuffleRead coalesced\n         +- ShuffleQueryStage 2\n            +- Exchange hashpartitioning(category_id#375L, 200), ENSURE_REQUIREMENTS, [plan_id=1138]\n               +- *(3) HashAggregate(keys=[category_id#375L], functions=[partial_sum(cnt#368L), partial_sum(uv#369L)], output=[category_id#375L, sum#387L, sum#388L])\n                  +- *(3) HashAggregate(keys=[category_id#375L, _groupingexpression#384], functions=[count(1), count(distinct user_id#373L)], output=[category_id#375L, cnt#368L, uv#369L])\n                     +- AQEShuffleRead coalesced\n                        +- ShuffleQueryStage 1\n                           +- Exchange hashpartitioning(category_id#375L, _groupingexpression#384, 200), ENSURE_REQUIREMENTS, [plan_id=1101]\n                              +- *(2) HashAggregate(keys=[category_id#375L, _groupingexpression#384], functions=[merge_count(1), partial_count(distinct user_id#373L)], output=[category_id#375L, _groupingexpression#384, count#390L, count#393L])\n                                 +- *(2) HashAggregate(keys=[category_id#375L, _groupingexpression#384, user_id#373L], functions=[merge_count(1)], output=[category_id#375L, _groupingexpression#384, user_id#373L, count#390L])\n                                    +- AQEShuffleRead coalesced\n                                       +- ShuffleQueryStage 0\n                                          +- Exchange hashpartitioning(category_id#375L, _groupingexpression#384, user_id#373L, 200), ENSURE_REQUIREMENTS, [plan_id=1055]\n                                             +- *(1) HashAggregate(keys=[category_id#375L, _groupingexpression#384, user_id#373L], functions=[partial_count(1)], output=[category_id#375L, _groupingexpression#384, user_id#373L, count#390L])\n                                                +- *(1) Project [user_id#373L, category_id#375L, pmod(hash(user_id#373L, 42), 16) AS _groupingexpression#384]\n                                                   +- *(1) ColumnarToRow\n                                                      +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#373L,category_id#375L,dt#380] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n+- == Initial Plan ==\n   HashAggregate(keys=[category_id#375L], functions=[sum(cnt#368L), sum(uv#369L)], output=[category_id#375L, cnt#370L, uv#371L])\n   +- Exchange hashpartitioning(category_id#375L, 200), ENSURE_REQUIREMENTS, [plan_id=1025]\n      +- HashAggregate(keys=[category_id#375L], functions=[partial_sum(cnt#368L), partial_sum(uv#369L)], output=[category_id#375L, sum#387L, sum#388L])\n         +- HashAggregate(keys=[category_id#375L, _groupingexpression#384], functions=[count(1), count(distinct user_id#373L)], output=[category_id#375L, cnt#368L, uv#369L])\n            +- Exchange hashpartitioning(category_id#375L, _groupingexpression#384, 200), ENSURE_REQUIREMENTS, [plan_id=1021]\n               +- HashAggregate(keys=[category_id#375L, _groupingexpression#384], functions=[merge_count(1), partial_count(distinct user_id#373L)], output=[category_id#375L, _groupingexpression#384, count#390L, count#393L])\n                  +- HashAggregate(keys=[category_id#375L, _groupingexpression#384, user_id#373L], functions=[merge_count(1)], output=[category_id#375L, _groupingexpression#384, user_id#373L, count#390L])\n                     +- Exchange hashpartitioning(category_id#375L, _groupingexpression#384, user_id#373L, 200), ENSURE_REQUIREMENTS, [plan_id=1017]\n                        +- HashAggregate(keys=[category_id#375L, _groupingexpression#384, user_id#373L], functions=[partial_count(1)], output=[category_id#375L, _groupingexpression#384, user_id#373L, count#390L])\n                           +- Project [user_id#373L, category_id#375L, pmod(hash(user_id#373L, 42), 16) AS _groupingexpression#384]\n                              +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#373L,category_id#375L,dt#380] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    },
+    {
+     "seconds": 11.76,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 66,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 51000,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 917781676,
+       "task_ms_min_p50_p95_max": [
+        1975,
+        3018,
+        3527,
+        3527
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 68,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 15,
+       "executor_run_ms": 25293,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 1151871,
+       "shuffle_write_bytes": 19440311,
+       "task_ms_min_p50_p95_max": [
+        800,
+        1640,
+        2023,
+        2023
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        1926074,
+        3845054,
+        3856248,
+        3856248
+       ]
+      },
+      {
+       "stage_id": 71,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 1,
+       "executor_run_ms": 246,
+       "shuffle_read_records": 1151871,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 183574,
+       "task_ms_min_p50_p95_max": [
+        246,
+        246,
+        246,
+        246
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        1151871,
+        1151871,
+        1151871,
+        1151871
+       ]
+      },
+      {
+       "stage_id": 75,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 1,
+       "executor_run_ms": 3,
+       "shuffle_read_records": 9437,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        3,
+        3,
+        3,
+        3
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        9437,
+        9437,
+        9437,
+        9437
+       ]
+      }
+     ],
+     "plan": "AdaptiveSparkPlan isFinalPlan=true\n+- == Final Plan ==\n   ResultQueryStage 3\n   +- *(4) HashAggregate(keys=[category_id#416L], functions=[sum(cnt#409L), sum(uv#410L)], output=[category_id#416L, cnt#411L, uv#412L])\n      +- AQEShuffleRead coalesced\n         +- ShuffleQueryStage 2\n            +- Exchange hashpartitioning(category_id#416L, 200), ENSURE_REQUIREMENTS, [plan_id=1304]\n               +- *(3) HashAggregate(keys=[category_id#416L], functions=[partial_sum(cnt#409L), partial_sum(uv#410L)], output=[category_id#416L, sum#428L, sum#429L])\n                  +- *(3) HashAggregate(keys=[category_id#416L, _groupingexpression#425], functions=[count(1), count(distinct user_id#414L)], output=[category_id#416L, cnt#409L, uv#410L])\n                     +- AQEShuffleRead coalesced\n                        +- ShuffleQueryStage 1\n                           +- Exchange hashpartitioning(category_id#416L, _groupingexpression#425, 200), ENSURE_REQUIREMENTS, [plan_id=1267]\n                              +- *(2) HashAggregate(keys=[category_id#416L, _groupingexpression#425], functions=[merge_count(1), partial_count(distinct user_id#414L)], output=[category_id#416L, _groupingexpression#425, count#431L, count#434L])\n                                 +- *(2) HashAggregate(keys=[category_id#416L, _groupingexpression#425, user_id#414L], functions=[merge_count(1)], output=[category_id#416L, _groupingexpression#425, user_id#414L, count#431L])\n                                    +- AQEShuffleRead coalesced\n                                       +- ShuffleQueryStage 0\n                                          +- Exchange hashpartitioning(category_id#416L, _groupingexpression#425, user_id#414L, 200), ENSURE_REQUIREMENTS, [plan_id=1221]\n                                             +- *(1) HashAggregate(keys=[category_id#416L, _groupingexpression#425, user_id#414L], functions=[partial_count(1)], output=[category_id#416L, _groupingexpression#425, user_id#414L, count#431L])\n                                                +- *(1) Project [user_id#414L, category_id#416L, pmod(hash(user_id#414L, 42), 16) AS _groupingexpression#425]\n                                                   +- *(1) ColumnarToRow\n                                                      +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#414L,category_id#416L,dt#421] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n+- == Initial Plan ==\n   HashAggregate(keys=[category_id#416L], functions=[sum(cnt#409L), sum(uv#410L)], output=[category_id#416L, cnt#411L, uv#412L])\n   +- Exchange hashpartitioning(category_id#416L, 200), ENSURE_REQUIREMENTS, [plan_id=1191]\n      +- HashAggregate(keys=[category_id#416L], functions=[partial_sum(cnt#409L), partial_sum(uv#410L)], output=[category_id#416L, sum#428L, sum#429L])\n         +- HashAggregate(keys=[category_id#416L, _groupingexpression#425], functions=[count(1), count(distinct user_id#414L)], output=[category_id#416L, cnt#409L, uv#410L])\n            +- Exchange hashpartitioning(category_id#416L, _groupingexpression#425, 200), ENSURE_REQUIREMENTS, [plan_id=1187]\n               +- HashAggregate(keys=[category_id#416L, _groupingexpression#425], functions=[merge_count(1), partial_count(distinct user_id#414L)], output=[category_id#416L, _groupingexpression#425, count#431L, count#434L])\n                  +- HashAggregate(keys=[category_id#416L, _groupingexpression#425, user_id#414L], functions=[merge_count(1)], output=[category_id#416L, _groupingexpression#425, user_id#414L, count#431L])\n                     +- Exchange hashpartitioning(category_id#416L, _groupingexpression#425, user_id#414L, 200), ENSURE_REQUIREMENTS, [plan_id=1183]\n                        +- HashAggregate(keys=[category_id#416L, _groupingexpression#425, user_id#414L], functions=[partial_count(1)], output=[category_id#416L, _groupingexpression#425, user_id#414L, count#431L])\n                           +- Project [user_id#414L, category_id#416L, pmod(hash(user_id#414L, 42), 16) AS _groupingexpression#425]\n                              +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#414L,category_id#416L,dt#421] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    },
+    {
+     "seconds": 11.7,
+     "result": {
+      "categories": 9437,
+      "cnt": 100095182,
+      "uv_sum": 24191391
+     },
+     "stages": [
+      {
+       "stage_id": 76,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 17,
+       "executor_run_ms": 49478,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 54961917,
+       "shuffle_write_bytes": 917781676,
+       "task_ms_min_p50_p95_max": [
+        2138,
+        2885,
+        3542,
+        3542
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 78,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 15,
+       "executor_run_ms": 25886,
+       "shuffle_read_records": 54961917,
+       "shuffle_write_records": 1151871,
+       "shuffle_write_bytes": 19440311,
+       "task_ms_min_p50_p95_max": [
+        817,
+        1725,
+        2093,
+        2093
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        1926074,
+        3845054,
+        3856248,
+        3856248
+       ]
+      },
+      {
+       "stage_id": 81,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 1,
+       "executor_run_ms": 236,
+       "shuffle_read_records": 1151871,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 183574,
+       "task_ms_min_p50_p95_max": [
+        236,
+        236,
+        236,
+        236
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        1151871,
+        1151871,
+        1151871,
+        1151871
+       ]
+      },
+      {
+       "stage_id": 85,
+       "name": "collect at /Users/lyh/Projects/taobao-behavior-warehouse/skew/skew_experiment.py",
+       "num_tasks": 1,
+       "executor_run_ms": 3,
+       "shuffle_read_records": 9437,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        3,
+        3,
+        3,
+        3
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        9437,
+        9437,
+        9437,
+        9437
+       ]
+      }
+     ],
+     "plan": "AdaptiveSparkPlan isFinalPlan=true\n+- == Final Plan ==\n   ResultQueryStage 3\n   +- *(4) HashAggregate(keys=[category_id#457L], functions=[sum(cnt#450L), sum(uv#451L)], output=[category_id#457L, cnt#452L, uv#453L])\n      +- AQEShuffleRead coalesced\n         +- ShuffleQueryStage 2\n            +- Exchange hashpartitioning(category_id#457L, 200), ENSURE_REQUIREMENTS, [plan_id=1470]\n               +- *(3) HashAggregate(keys=[category_id#457L], functions=[partial_sum(cnt#450L), partial_sum(uv#451L)], output=[category_id#457L, sum#469L, sum#470L])\n                  +- *(3) HashAggregate(keys=[category_id#457L, _groupingexpression#466], functions=[count(1), count(distinct user_id#455L)], output=[category_id#457L, cnt#450L, uv#451L])\n                     +- AQEShuffleRead coalesced\n                        +- ShuffleQueryStage 1\n                           +- Exchange hashpartitioning(category_id#457L, _groupingexpression#466, 200), ENSURE_REQUIREMENTS, [plan_id=1433]\n                              +- *(2) HashAggregate(keys=[category_id#457L, _groupingexpression#466], functions=[merge_count(1), partial_count(distinct user_id#455L)], output=[category_id#457L, _groupingexpression#466, count#472L, count#475L])\n                                 +- *(2) HashAggregate(keys=[category_id#457L, _groupingexpression#466, user_id#455L], functions=[merge_count(1)], output=[category_id#457L, _groupingexpression#466, user_id#455L, count#472L])\n                                    +- AQEShuffleRead coalesced\n                                       +- ShuffleQueryStage 0\n                                          +- Exchange hashpartitioning(category_id#457L, _groupingexpression#466, user_id#455L, 200), ENSURE_REQUIREMENTS, [plan_id=1387]\n                                             +- *(1) HashAggregate(keys=[category_id#457L, _groupingexpression#466, user_id#455L], functions=[partial_count(1)], output=[category_id#457L, _groupingexpression#466, user_id#455L, count#472L])\n                                                +- *(1) Project [user_id#455L, category_id#457L, pmod(hash(user_id#455L, 42), 16) AS _groupingexpression#466]\n                                                   +- *(1) ColumnarToRow\n                                                      +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#455L,category_id#457L,dt#462] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n+- == Initial Plan ==\n   HashAggregate(keys=[category_id#457L], functions=[sum(cnt#450L), sum(uv#451L)], output=[category_id#457L, cnt#452L, uv#453L])\n   +- Exchange hashpartitioning(category_id#457L, 200), ENSURE_REQUIREMENTS, [plan_id=1357]\n      +- HashAggregate(keys=[category_id#457L], functions=[partial_sum(cnt#450L), partial_sum(uv#451L)], output=[category_id#457L, sum#469L, sum#470L])\n         +- HashAggregate(keys=[category_id#457L, _groupingexpression#466], functions=[count(1), count(distinct user_id#455L)], output=[category_id#457L, cnt#450L, uv#451L])\n            +- Exchange hashpartitioning(category_id#457L, _groupingexpression#466, 200), ENSURE_REQUIREMENTS, [plan_id=1353]\n               +- HashAggregate(keys=[category_id#457L, _groupingexpression#466], functions=[merge_count(1), partial_count(distinct user_id#455L)], output=[category_id#457L, _groupingexpression#466, count#472L, count#475L])\n                  +- HashAggregate(keys=[category_id#457L, _groupingexpression#466, user_id#455L], functions=[merge_count(1)], output=[category_id#457L, _groupingexpression#466, user_id#455L, count#472L])\n                     +- Exchange hashpartitioning(category_id#457L, _groupingexpression#466, user_id#455L, 200), ENSURE_REQUIREMENTS, [plan_id=1349]\n                        +- HashAggregate(keys=[category_id#457L, _groupingexpression#466, user_id#455L], functions=[partial_count(1)], output=[category_id#457L, _groupingexpression#466, user_id#455L, count#472L])\n                           +- Project [user_id#455L, category_id#457L, pmod(hash(user_id#455L, 42), 16) AS _groupingexpression#466]\n                              +- FileScan parquet spark_catalog.tb_full.dwd_user_behavior_inc[user_id#455L,category_id#457L,dt#462] Batched: true, DataFilters: [], Format: Parquet, Location: CatalogFileIndex(1 paths)[file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_f..., PartitionFilters: [], PushedFilters: [], ReadSchema: struct<user_id:bigint,category_id:bigint>\n"
+    }
+   ]
+  },
+  {
+   "name": "join_smj_aqe_off",
+   "group": "join",
+   "conf": {
+    "spark.sql.autoBroadcastJoinThreshold": "-1",
+    "spark.sql.adaptive.enabled": "false"
+   },
+   "reps": [
+    {
+     "seconds": 9.45,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 15,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 17,
+       "executor_run_ms": 33875,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 1899579290,
+       "task_ms_min_p50_p95_max": [
+        1201,
+        2016,
+        2370,
+        2370
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 16,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 1,
+       "executor_run_ms": 56,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 143025,
+       "task_ms_min_p50_p95_max": [
+        56,
+        56,
+        56,
+        56
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 17,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 200,
+       "executor_run_ms": 30142,
+       "shuffle_read_records": 100104619,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        11,
+        83,
+        545,
+        2447
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        38738,
+        259311,
+        1933586,
+        6490884
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (14)\n+- * Project (13)\n   +- * SortMergeJoin Inner (12)\n      :- * Sort (6)\n      :  +- Exchange (5)\n      :     +- * Project (4)\n      :        +- * Filter (3)\n      :           +- * ColumnarToRow (2)\n      :              +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n      +- * Sort (11)\n         +- Exchange (10)\n            +- * Filter (9)\n               +- * ColumnarToRow (8)\n                  +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (7)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#97L, item_id#98L, category_id#99L, behavior_type#100, event_ts#101L, dt#104]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#97L, item_id#98L, category_id#99L, behavior_type#100, event_ts#101L, dt#104]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#97L, item_id#98L, category_id#99L, behavior_type#100, event_ts#101L, dt#104]\nCondition : isnotnull(category_id#99L)\n\n(4) Project [codegen id : 1]\nOutput [5]: [user_id#97L, item_id#98L, category_id#99L, behavior_type#100, event_ts#101L]\nInput [6]: [user_id#97L, item_id#98L, category_id#99L, behavior_type#100, event_ts#101L, dt#104]\n\n(5) Exchange\nInput [5]: [user_id#97L, item_id#98L, category_id#99L, behavior_type#100, event_ts#101L]\nArguments: hashpartitioning(category_id#99L, 200), ENSURE_REQUIREMENTS, [plan_id=312]\n\n(6) Sort [codegen id : 2]\nInput [5]: [user_id#97L, item_id#98L, category_id#99L, behavior_type#100, event_ts#101L]\nArguments: [category_id#99L ASC NULLS FIRST], false, 0\n\n(7) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#105L, item_cnt#106L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(8) ColumnarToRow [codegen id : 3]\nInput [2]: [category_id#105L, item_cnt#106L]\n\n(9) Filter [codegen id : 3]\nInput [2]: [category_id#105L, item_cnt#106L]\nCondition : isnotnull(category_id#105L)\n\n(10) Exchange\nInput [2]: [category_id#105L, item_cnt#106L]\nArguments: hashpartitioning(category_id#105L, 200), ENSURE_REQUIREMENTS, [plan_id=321]\n\n(11) Sort [codegen id : 4]\nInput [2]: [category_id#105L, item_cnt#106L]\nArguments: [category_id#105L ASC NULLS FIRST], false, 0\n\n(12) SortMergeJoin [codegen id : 5]\nLeft keys [1]: [category_id#99L]\nRight keys [1]: [category_id#105L]\nJoin type: Inner\nJoin condition: None\n\n(13) Project [codegen id : 5]\nOutput [5]: [user_id#97L, item_id#98L, behavior_type#100, event_ts#101L, item_cnt#106L]\nInput [7]: [user_id#97L, item_id#98L, category_id#99L, behavior_type#100, event_ts#101L, category_id#105L, item_cnt#106L]\n\n(14) OverwriteByExpression noop-table\nInput [5]: [user_id#97L, item_id#98L, behavior_type#100, event_ts#101L, item_cnt#106L]\nArguments: NoopWrite\n\n"
+    },
+    {
+     "seconds": 8.95,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 18,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 1,
+       "executor_run_ms": 93,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 143025,
+       "task_ms_min_p50_p95_max": [
+        93,
+        93,
+        93,
+        93
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 19,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 17,
+       "executor_run_ms": 34180,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 1899579290,
+       "task_ms_min_p50_p95_max": [
+        1170,
+        2028,
+        2294,
+        2294
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 20,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 200,
+       "executor_run_ms": 26270,
+       "shuffle_read_records": 100104619,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        11,
+        70,
+        465,
+        2246
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        38738,
+        259311,
+        1933586,
+        6490884
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (14)\n+- * Project (13)\n   +- * SortMergeJoin Inner (12)\n      :- * Sort (6)\n      :  +- Exchange (5)\n      :     +- * Project (4)\n      :        +- * Filter (3)\n      :           +- * ColumnarToRow (2)\n      :              +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n      +- * Sort (11)\n         +- Exchange (10)\n            +- * Filter (9)\n               +- * ColumnarToRow (8)\n                  +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (7)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#107L, item_id#108L, category_id#109L, behavior_type#110, event_ts#111L, dt#114]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#107L, item_id#108L, category_id#109L, behavior_type#110, event_ts#111L, dt#114]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#107L, item_id#108L, category_id#109L, behavior_type#110, event_ts#111L, dt#114]\nCondition : isnotnull(category_id#109L)\n\n(4) Project [codegen id : 1]\nOutput [5]: [user_id#107L, item_id#108L, category_id#109L, behavior_type#110, event_ts#111L]\nInput [6]: [user_id#107L, item_id#108L, category_id#109L, behavior_type#110, event_ts#111L, dt#114]\n\n(5) Exchange\nInput [5]: [user_id#107L, item_id#108L, category_id#109L, behavior_type#110, event_ts#111L]\nArguments: hashpartitioning(category_id#109L, 200), ENSURE_REQUIREMENTS, [plan_id=403]\n\n(6) Sort [codegen id : 2]\nInput [5]: [user_id#107L, item_id#108L, category_id#109L, behavior_type#110, event_ts#111L]\nArguments: [category_id#109L ASC NULLS FIRST], false, 0\n\n(7) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#115L, item_cnt#116L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(8) ColumnarToRow [codegen id : 3]\nInput [2]: [category_id#115L, item_cnt#116L]\n\n(9) Filter [codegen id : 3]\nInput [2]: [category_id#115L, item_cnt#116L]\nCondition : isnotnull(category_id#115L)\n\n(10) Exchange\nInput [2]: [category_id#115L, item_cnt#116L]\nArguments: hashpartitioning(category_id#115L, 200), ENSURE_REQUIREMENTS, [plan_id=412]\n\n(11) Sort [codegen id : 4]\nInput [2]: [category_id#115L, item_cnt#116L]\nArguments: [category_id#115L ASC NULLS FIRST], false, 0\n\n(12) SortMergeJoin [codegen id : 5]\nLeft keys [1]: [category_id#109L]\nRight keys [1]: [category_id#115L]\nJoin type: Inner\nJoin condition: None\n\n(13) Project [codegen id : 5]\nOutput [5]: [user_id#107L, item_id#108L, behavior_type#110, event_ts#111L, item_cnt#116L]\nInput [7]: [user_id#107L, item_id#108L, category_id#109L, behavior_type#110, event_ts#111L, category_id#115L, item_cnt#116L]\n\n(14) OverwriteByExpression noop-table\nInput [5]: [user_id#107L, item_id#108L, behavior_type#110, event_ts#111L, item_cnt#116L]\nArguments: NoopWrite\n\n"
+    },
+    {
+     "seconds": 8.68,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 21,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 1,
+       "executor_run_ms": 86,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 143025,
+       "task_ms_min_p50_p95_max": [
+        86,
+        86,
+        86,
+        86
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 22,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 17,
+       "executor_run_ms": 32723,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 1899579290,
+       "task_ms_min_p50_p95_max": [
+        1207,
+        1929,
+        2222,
+        2222
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 23,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 200,
+       "executor_run_ms": 26517,
+       "shuffle_read_records": 100104619,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        10,
+        73,
+        484,
+        2336
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        38738,
+        259311,
+        1933586,
+        6490884
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (14)\n+- * Project (13)\n   +- * SortMergeJoin Inner (12)\n      :- * Sort (6)\n      :  +- Exchange (5)\n      :     +- * Project (4)\n      :        +- * Filter (3)\n      :           +- * ColumnarToRow (2)\n      :              +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n      +- * Sort (11)\n         +- Exchange (10)\n            +- * Filter (9)\n               +- * ColumnarToRow (8)\n                  +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (7)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#117L, item_id#118L, category_id#119L, behavior_type#120, event_ts#121L, dt#124]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#117L, item_id#118L, category_id#119L, behavior_type#120, event_ts#121L, dt#124]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#117L, item_id#118L, category_id#119L, behavior_type#120, event_ts#121L, dt#124]\nCondition : isnotnull(category_id#119L)\n\n(4) Project [codegen id : 1]\nOutput [5]: [user_id#117L, item_id#118L, category_id#119L, behavior_type#120, event_ts#121L]\nInput [6]: [user_id#117L, item_id#118L, category_id#119L, behavior_type#120, event_ts#121L, dt#124]\n\n(5) Exchange\nInput [5]: [user_id#117L, item_id#118L, category_id#119L, behavior_type#120, event_ts#121L]\nArguments: hashpartitioning(category_id#119L, 200), ENSURE_REQUIREMENTS, [plan_id=494]\n\n(6) Sort [codegen id : 2]\nInput [5]: [user_id#117L, item_id#118L, category_id#119L, behavior_type#120, event_ts#121L]\nArguments: [category_id#119L ASC NULLS FIRST], false, 0\n\n(7) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#125L, item_cnt#126L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(8) ColumnarToRow [codegen id : 3]\nInput [2]: [category_id#125L, item_cnt#126L]\n\n(9) Filter [codegen id : 3]\nInput [2]: [category_id#125L, item_cnt#126L]\nCondition : isnotnull(category_id#125L)\n\n(10) Exchange\nInput [2]: [category_id#125L, item_cnt#126L]\nArguments: hashpartitioning(category_id#125L, 200), ENSURE_REQUIREMENTS, [plan_id=503]\n\n(11) Sort [codegen id : 4]\nInput [2]: [category_id#125L, item_cnt#126L]\nArguments: [category_id#125L ASC NULLS FIRST], false, 0\n\n(12) SortMergeJoin [codegen id : 5]\nLeft keys [1]: [category_id#119L]\nRight keys [1]: [category_id#125L]\nJoin type: Inner\nJoin condition: None\n\n(13) Project [codegen id : 5]\nOutput [5]: [user_id#117L, item_id#118L, behavior_type#120, event_ts#121L, item_cnt#126L]\nInput [7]: [user_id#117L, item_id#118L, category_id#119L, behavior_type#120, event_ts#121L, category_id#125L, item_cnt#126L]\n\n(14) OverwriteByExpression noop-table\nInput [5]: [user_id#117L, item_id#118L, behavior_type#120, event_ts#121L, item_cnt#126L]\nArguments: NoopWrite\n\n"
+    }
+   ]
+  },
+  {
+   "name": "join_smj_aqe_default",
+   "group": "join",
+   "conf": {
+    "spark.sql.autoBroadcastJoinThreshold": "-1",
+    "spark.sql.adaptive.enabled": "true",
+    "spark.sql.adaptive.skewJoin.enabled": "true",
+    "spark.sql.adaptive.skewJoin.skewedPartitionFactor": "5",
+    "spark.sql.adaptive.skewJoin.skewedPartitionThresholdInBytes": "256MB"
+   },
+   "reps": [
+    {
+     "seconds": 10.23,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 24,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 1,
+       "executor_run_ms": 107,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 143025,
+       "task_ms_min_p50_p95_max": [
+        107,
+        107,
+        107,
+        107
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 25,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 17,
+       "executor_run_ms": 33687,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 1899579290,
+       "task_ms_min_p50_p95_max": [
+        1174,
+        2019,
+        2234,
+        2234
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 28,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 35,
+       "executor_run_ms": 36248,
+       "shuffle_read_records": 100104619,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        120,
+        961,
+        1589,
+        2898
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        334546,
+        2943061,
+        3747125,
+        6490884
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (29)\n+- AdaptiveSparkPlan (28)\n   +- == Final Plan ==\n      ResultQueryStage (18), Statistics(sizeInBytes=8.0 EiB)\n      +- * Project (17)\n         +- * SortMergeJoin Inner (16)\n            :- * Sort (8)\n            :  +- AQEShuffleRead (7), coalesced\n            :     +- ShuffleQueryStage (6), Statistics(sizeInBytes=5.2 GiB, rowCount=1.00E+8)\n            :        +- Exchange (5)\n            :           +- * Project (4)\n            :              +- * Filter (3)\n            :                 +- * ColumnarToRow (2)\n            :                    +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n            +- * Sort (15)\n               +- AQEShuffleRead (14), coalesced\n                  +- ShuffleQueryStage (13), Statistics(sizeInBytes=221.2 KiB, rowCount=9.44E+3)\n                     +- Exchange (12)\n                        +- * Filter (11)\n                           +- * ColumnarToRow (10)\n                              +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n   +- == Initial Plan ==\n      Project (27)\n      +- SortMergeJoin Inner (26)\n         :- Sort (22)\n         :  +- Exchange (21)\n         :     +- Project (20)\n         :        +- Filter (19)\n         :           +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n         +- Sort (25)\n            +- Exchange (24)\n               +- Filter (23)\n                  +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L, dt#134]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L, dt#134]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L, dt#134]\nCondition : isnotnull(category_id#129L)\n\n(4) Project [codegen id : 1]\nOutput [5]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L]\nInput [6]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L, dt#134]\n\n(5) Exchange\nInput [5]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L]\nArguments: hashpartitioning(category_id#129L, 200), ENSURE_REQUIREMENTS, [plan_id=584]\n\n(6) ShuffleQueryStage\nOutput [5]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L]\nArguments: 0\n\n(7) AQEShuffleRead\nInput [5]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L]\nArguments: coalesced\n\n(8) Sort [codegen id : 3]\nInput [5]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L]\nArguments: [category_id#129L ASC NULLS FIRST], false, 0\n\n(9) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#135L, item_cnt#136L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(10) ColumnarToRow [codegen id : 2]\nInput [2]: [category_id#135L, item_cnt#136L]\n\n(11) Filter [codegen id : 2]\nInput [2]: [category_id#135L, item_cnt#136L]\nCondition : isnotnull(category_id#135L)\n\n(12) Exchange\nInput [2]: [category_id#135L, item_cnt#136L]\nArguments: hashpartitioning(category_id#135L, 200), ENSURE_REQUIREMENTS, [plan_id=608]\n\n(13) ShuffleQueryStage\nOutput [2]: [category_id#135L, item_cnt#136L]\nArguments: 1\n\n(14) AQEShuffleRead\nInput [2]: [category_id#135L, item_cnt#136L]\nArguments: coalesced\n\n(15) Sort [codegen id : 4]\nInput [2]: [category_id#135L, item_cnt#136L]\nArguments: [category_id#135L ASC NULLS FIRST], false, 0\n\n(16) SortMergeJoin [codegen id : 5]\nLeft keys [1]: [category_id#129L]\nRight keys [1]: [category_id#135L]\nJoin type: Inner\nJoin condition: None\n\n(17) Project [codegen id : 5]\nOutput [5]: [user_id#127L, item_id#128L, behavior_type#130, event_ts#131L, item_cnt#136L]\nInput [7]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L, category_id#135L, item_cnt#136L]\n\n(18) ResultQueryStage\nOutput [5]: [user_id#127L, item_id#128L, behavior_type#130, event_ts#131L, item_cnt#136L]\nArguments: 2\n\n(19) Filter\nInput [6]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L, dt#134]\nCondition : isnotnull(category_id#129L)\n\n(20) Project\nOutput [5]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L]\nInput [6]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L, dt#134]\n\n(21) Exchange\nInput [5]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L]\nArguments: hashpartitioning(category_id#129L, 200), ENSURE_REQUIREMENTS, [plan_id=561]\n\n(22) Sort\nInput [5]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L]\nArguments: [category_id#129L ASC NULLS FIRST], false, 0\n\n(23) Filter\nInput [2]: [category_id#135L, item_cnt#136L]\nCondition : isnotnull(category_id#135L)\n\n(24) Exchange\nInput [2]: [category_id#135L, item_cnt#136L]\nArguments: hashpartitioning(category_id#135L, 200), ENSURE_REQUIREMENTS, [plan_id=562]\n\n(25) Sort\nInput [2]: [category_id#135L, item_cnt#136L]\nArguments: [category_id#135L ASC NULLS FIRST], false, 0\n\n(26) SortMergeJoin\nLeft keys [1]: [category_id#129L]\nRight keys [1]: [category_id#135L]\nJoin type: Inner\nJoin condition: None\n\n(27) Project\nOutput [5]: [user_id#127L, item_id#128L, behavior_type#130, event_ts#131L, item_cnt#136L]\nInput [7]: [user_id#127L, item_id#128L, category_id#129L, behavior_type#130, event_ts#131L, category_id#135L, item_cnt#136L]\n\n(28) AdaptiveSparkPlan\nOutput [5]: [user_id#127L, item_id#128L, behavior_type#130, event_ts#131L, item_cnt#136L]\nArguments: isFinalPlan=true\n\n(29) OverwriteByExpression noop-table\nInput [5]: [user_id#127L, item_id#128L, behavior_type#130, event_ts#131L, item_cnt#136L]\nArguments: NoopWrite\n\n"
+    },
+    {
+     "seconds": 10.9,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 29,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 1,
+       "executor_run_ms": 59,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 143025,
+       "task_ms_min_p50_p95_max": [
+        59,
+        59,
+        59,
+        59
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 30,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 17,
+       "executor_run_ms": 37396,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 1899579290,
+       "task_ms_min_p50_p95_max": [
+        1290,
+        2088,
+        2658,
+        2658
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 33,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 35,
+       "executor_run_ms": 39591,
+       "shuffle_read_records": 100104619,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        134,
+        1203,
+        1654,
+        3390
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        334546,
+        2943061,
+        3747125,
+        6490884
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (29)\n+- AdaptiveSparkPlan (28)\n   +- == Final Plan ==\n      ResultQueryStage (18), Statistics(sizeInBytes=8.0 EiB)\n      +- * Project (17)\n         +- * SortMergeJoin Inner (16)\n            :- * Sort (8)\n            :  +- AQEShuffleRead (7), coalesced\n            :     +- ShuffleQueryStage (6), Statistics(sizeInBytes=5.2 GiB, rowCount=1.00E+8)\n            :        +- Exchange (5)\n            :           +- * Project (4)\n            :              +- * Filter (3)\n            :                 +- * ColumnarToRow (2)\n            :                    +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n            +- * Sort (15)\n               +- AQEShuffleRead (14), coalesced\n                  +- ShuffleQueryStage (13), Statistics(sizeInBytes=221.2 KiB, rowCount=9.44E+3)\n                     +- Exchange (12)\n                        +- * Filter (11)\n                           +- * ColumnarToRow (10)\n                              +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n   +- == Initial Plan ==\n      Project (27)\n      +- SortMergeJoin Inner (26)\n         :- Sort (22)\n         :  +- Exchange (21)\n         :     +- Project (20)\n         :        +- Filter (19)\n         :           +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n         +- Sort (25)\n            +- Exchange (24)\n               +- Filter (23)\n                  +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L, dt#144]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L, dt#144]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L, dt#144]\nCondition : isnotnull(category_id#139L)\n\n(4) Project [codegen id : 1]\nOutput [5]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L]\nInput [6]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L, dt#144]\n\n(5) Exchange\nInput [5]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L]\nArguments: hashpartitioning(category_id#139L, 200), ENSURE_REQUIREMENTS, [plan_id=720]\n\n(6) ShuffleQueryStage\nOutput [5]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L]\nArguments: 0\n\n(7) AQEShuffleRead\nInput [5]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L]\nArguments: coalesced\n\n(8) Sort [codegen id : 3]\nInput [5]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L]\nArguments: [category_id#139L ASC NULLS FIRST], false, 0\n\n(9) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#145L, item_cnt#146L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(10) ColumnarToRow [codegen id : 2]\nInput [2]: [category_id#145L, item_cnt#146L]\n\n(11) Filter [codegen id : 2]\nInput [2]: [category_id#145L, item_cnt#146L]\nCondition : isnotnull(category_id#145L)\n\n(12) Exchange\nInput [2]: [category_id#145L, item_cnt#146L]\nArguments: hashpartitioning(category_id#145L, 200), ENSURE_REQUIREMENTS, [plan_id=744]\n\n(13) ShuffleQueryStage\nOutput [2]: [category_id#145L, item_cnt#146L]\nArguments: 1\n\n(14) AQEShuffleRead\nInput [2]: [category_id#145L, item_cnt#146L]\nArguments: coalesced\n\n(15) Sort [codegen id : 4]\nInput [2]: [category_id#145L, item_cnt#146L]\nArguments: [category_id#145L ASC NULLS FIRST], false, 0\n\n(16) SortMergeJoin [codegen id : 5]\nLeft keys [1]: [category_id#139L]\nRight keys [1]: [category_id#145L]\nJoin type: Inner\nJoin condition: None\n\n(17) Project [codegen id : 5]\nOutput [5]: [user_id#137L, item_id#138L, behavior_type#140, event_ts#141L, item_cnt#146L]\nInput [7]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L, category_id#145L, item_cnt#146L]\n\n(18) ResultQueryStage\nOutput [5]: [user_id#137L, item_id#138L, behavior_type#140, event_ts#141L, item_cnt#146L]\nArguments: 2\n\n(19) Filter\nInput [6]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L, dt#144]\nCondition : isnotnull(category_id#139L)\n\n(20) Project\nOutput [5]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L]\nInput [6]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L, dt#144]\n\n(21) Exchange\nInput [5]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L]\nArguments: hashpartitioning(category_id#139L, 200), ENSURE_REQUIREMENTS, [plan_id=697]\n\n(22) Sort\nInput [5]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L]\nArguments: [category_id#139L ASC NULLS FIRST], false, 0\n\n(23) Filter\nInput [2]: [category_id#145L, item_cnt#146L]\nCondition : isnotnull(category_id#145L)\n\n(24) Exchange\nInput [2]: [category_id#145L, item_cnt#146L]\nArguments: hashpartitioning(category_id#145L, 200), ENSURE_REQUIREMENTS, [plan_id=698]\n\n(25) Sort\nInput [2]: [category_id#145L, item_cnt#146L]\nArguments: [category_id#145L ASC NULLS FIRST], false, 0\n\n(26) SortMergeJoin\nLeft keys [1]: [category_id#139L]\nRight keys [1]: [category_id#145L]\nJoin type: Inner\nJoin condition: None\n\n(27) Project\nOutput [5]: [user_id#137L, item_id#138L, behavior_type#140, event_ts#141L, item_cnt#146L]\nInput [7]: [user_id#137L, item_id#138L, category_id#139L, behavior_type#140, event_ts#141L, category_id#145L, item_cnt#146L]\n\n(28) AdaptiveSparkPlan\nOutput [5]: [user_id#137L, item_id#138L, behavior_type#140, event_ts#141L, item_cnt#146L]\nArguments: isFinalPlan=true\n\n(29) OverwriteByExpression noop-table\nInput [5]: [user_id#137L, item_id#138L, behavior_type#140, event_ts#141L, item_cnt#146L]\nArguments: NoopWrite\n\n"
+    },
+    {
+     "seconds": 10.84,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 34,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 1,
+       "executor_run_ms": 55,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 143025,
+       "task_ms_min_p50_p95_max": [
+        55,
+        55,
+        55,
+        55
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 35,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 17,
+       "executor_run_ms": 36748,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 1899579290,
+       "task_ms_min_p50_p95_max": [
+        1204,
+        2079,
+        2670,
+        2670
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 38,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 35,
+       "executor_run_ms": 38553,
+       "shuffle_read_records": 100104619,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        146,
+        1050,
+        1493,
+        3212
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        334546,
+        2943061,
+        3747125,
+        6490884
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (29)\n+- AdaptiveSparkPlan (28)\n   +- == Final Plan ==\n      ResultQueryStage (18), Statistics(sizeInBytes=8.0 EiB)\n      +- * Project (17)\n         +- * SortMergeJoin Inner (16)\n            :- * Sort (8)\n            :  +- AQEShuffleRead (7), coalesced\n            :     +- ShuffleQueryStage (6), Statistics(sizeInBytes=5.2 GiB, rowCount=1.00E+8)\n            :        +- Exchange (5)\n            :           +- * Project (4)\n            :              +- * Filter (3)\n            :                 +- * ColumnarToRow (2)\n            :                    +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n            +- * Sort (15)\n               +- AQEShuffleRead (14), coalesced\n                  +- ShuffleQueryStage (13), Statistics(sizeInBytes=221.2 KiB, rowCount=9.44E+3)\n                     +- Exchange (12)\n                        +- * Filter (11)\n                           +- * ColumnarToRow (10)\n                              +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n   +- == Initial Plan ==\n      Project (27)\n      +- SortMergeJoin Inner (26)\n         :- Sort (22)\n         :  +- Exchange (21)\n         :     +- Project (20)\n         :        +- Filter (19)\n         :           +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n         +- Sort (25)\n            +- Exchange (24)\n               +- Filter (23)\n                  +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L, dt#154]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L, dt#154]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L, dt#154]\nCondition : isnotnull(category_id#149L)\n\n(4) Project [codegen id : 1]\nOutput [5]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L]\nInput [6]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L, dt#154]\n\n(5) Exchange\nInput [5]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L]\nArguments: hashpartitioning(category_id#149L, 200), ENSURE_REQUIREMENTS, [plan_id=856]\n\n(6) ShuffleQueryStage\nOutput [5]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L]\nArguments: 0\n\n(7) AQEShuffleRead\nInput [5]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L]\nArguments: coalesced\n\n(8) Sort [codegen id : 3]\nInput [5]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L]\nArguments: [category_id#149L ASC NULLS FIRST], false, 0\n\n(9) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#155L, item_cnt#156L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(10) ColumnarToRow [codegen id : 2]\nInput [2]: [category_id#155L, item_cnt#156L]\n\n(11) Filter [codegen id : 2]\nInput [2]: [category_id#155L, item_cnt#156L]\nCondition : isnotnull(category_id#155L)\n\n(12) Exchange\nInput [2]: [category_id#155L, item_cnt#156L]\nArguments: hashpartitioning(category_id#155L, 200), ENSURE_REQUIREMENTS, [plan_id=880]\n\n(13) ShuffleQueryStage\nOutput [2]: [category_id#155L, item_cnt#156L]\nArguments: 1\n\n(14) AQEShuffleRead\nInput [2]: [category_id#155L, item_cnt#156L]\nArguments: coalesced\n\n(15) Sort [codegen id : 4]\nInput [2]: [category_id#155L, item_cnt#156L]\nArguments: [category_id#155L ASC NULLS FIRST], false, 0\n\n(16) SortMergeJoin [codegen id : 5]\nLeft keys [1]: [category_id#149L]\nRight keys [1]: [category_id#155L]\nJoin type: Inner\nJoin condition: None\n\n(17) Project [codegen id : 5]\nOutput [5]: [user_id#147L, item_id#148L, behavior_type#150, event_ts#151L, item_cnt#156L]\nInput [7]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L, category_id#155L, item_cnt#156L]\n\n(18) ResultQueryStage\nOutput [5]: [user_id#147L, item_id#148L, behavior_type#150, event_ts#151L, item_cnt#156L]\nArguments: 2\n\n(19) Filter\nInput [6]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L, dt#154]\nCondition : isnotnull(category_id#149L)\n\n(20) Project\nOutput [5]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L]\nInput [6]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L, dt#154]\n\n(21) Exchange\nInput [5]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L]\nArguments: hashpartitioning(category_id#149L, 200), ENSURE_REQUIREMENTS, [plan_id=833]\n\n(22) Sort\nInput [5]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L]\nArguments: [category_id#149L ASC NULLS FIRST], false, 0\n\n(23) Filter\nInput [2]: [category_id#155L, item_cnt#156L]\nCondition : isnotnull(category_id#155L)\n\n(24) Exchange\nInput [2]: [category_id#155L, item_cnt#156L]\nArguments: hashpartitioning(category_id#155L, 200), ENSURE_REQUIREMENTS, [plan_id=834]\n\n(25) Sort\nInput [2]: [category_id#155L, item_cnt#156L]\nArguments: [category_id#155L ASC NULLS FIRST], false, 0\n\n(26) SortMergeJoin\nLeft keys [1]: [category_id#149L]\nRight keys [1]: [category_id#155L]\nJoin type: Inner\nJoin condition: None\n\n(27) Project\nOutput [5]: [user_id#147L, item_id#148L, behavior_type#150, event_ts#151L, item_cnt#156L]\nInput [7]: [user_id#147L, item_id#148L, category_id#149L, behavior_type#150, event_ts#151L, category_id#155L, item_cnt#156L]\n\n(28) AdaptiveSparkPlan\nOutput [5]: [user_id#147L, item_id#148L, behavior_type#150, event_ts#151L, item_cnt#156L]\nArguments: isFinalPlan=true\n\n(29) OverwriteByExpression noop-table\nInput [5]: [user_id#147L, item_id#148L, behavior_type#150, event_ts#151L, item_cnt#156L]\nArguments: NoopWrite\n\n"
+    }
+   ]
+  },
+  {
+   "name": "join_smj_aqe_tuned",
+   "group": "join",
+   "conf": {
+    "spark.sql.autoBroadcastJoinThreshold": "-1",
+    "spark.sql.adaptive.enabled": "true",
+    "spark.sql.adaptive.skewJoin.enabled": "true",
+    "spark.sql.adaptive.skewJoin.skewedPartitionFactor": "5",
+    "spark.sql.adaptive.skewJoin.skewedPartitionThresholdInBytes": "16MB",
+    "spark.sql.adaptive.advisoryPartitionSizeInBytes": "16MB"
+   },
+   "reps": [
+    {
+     "seconds": 9.26,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 39,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 1,
+       "executor_run_ms": 56,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 143025,
+       "task_ms_min_p50_p95_max": [
+        56,
+        56,
+        56,
+        56
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 40,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 17,
+       "executor_run_ms": 39531,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 1899579290,
+       "task_ms_min_p50_p95_max": [
+        1190,
+        2106,
+        2910,
+        2910
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 43,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 145,
+       "executor_run_ms": 24783,
+       "shuffle_read_records": 100106215,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        29,
+        177,
+        261,
+        344
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        102907,
+        732684,
+        1011750,
+        1330124
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": true,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (29)\n+- AdaptiveSparkPlan (28)\n   +- == Final Plan ==\n      ResultQueryStage (18), Statistics(sizeInBytes=8.0 EiB)\n      +- * Project (17)\n         +- * SortMergeJoin(skew=true) Inner (16)\n            :- * Sort (8)\n            :  +- AQEShuffleRead (7), coalesced and skewed\n            :     +- ShuffleQueryStage (6), Statistics(sizeInBytes=5.2 GiB, rowCount=1.00E+8)\n            :        +- Exchange (5)\n            :           +- * Project (4)\n            :              +- * Filter (3)\n            :                 +- * ColumnarToRow (2)\n            :                    +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n            +- * Sort (15)\n               +- AQEShuffleRead (14), coalesced\n                  +- ShuffleQueryStage (13), Statistics(sizeInBytes=221.2 KiB, rowCount=9.44E+3)\n                     +- Exchange (12)\n                        +- * Filter (11)\n                           +- * ColumnarToRow (10)\n                              +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n   +- == Initial Plan ==\n      Project (27)\n      +- SortMergeJoin Inner (26)\n         :- Sort (22)\n         :  +- Exchange (21)\n         :     +- Project (20)\n         :        +- Filter (19)\n         :           +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n         +- Sort (25)\n            +- Exchange (24)\n               +- Filter (23)\n                  +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L, dt#164]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L, dt#164]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L, dt#164]\nCondition : isnotnull(category_id#159L)\n\n(4) Project [codegen id : 1]\nOutput [5]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L]\nInput [6]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L, dt#164]\n\n(5) Exchange\nInput [5]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L]\nArguments: hashpartitioning(category_id#159L, 200), ENSURE_REQUIREMENTS, [plan_id=992]\n\n(6) ShuffleQueryStage\nOutput [5]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L]\nArguments: 0\n\n(7) AQEShuffleRead\nInput [5]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L]\nArguments: coalesced and skewed\n\n(8) Sort [codegen id : 3]\nInput [5]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L]\nArguments: [category_id#159L ASC NULLS FIRST], false, 0\n\n(9) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#165L, item_cnt#166L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(10) ColumnarToRow [codegen id : 2]\nInput [2]: [category_id#165L, item_cnt#166L]\n\n(11) Filter [codegen id : 2]\nInput [2]: [category_id#165L, item_cnt#166L]\nCondition : isnotnull(category_id#165L)\n\n(12) Exchange\nInput [2]: [category_id#165L, item_cnt#166L]\nArguments: hashpartitioning(category_id#165L, 200), ENSURE_REQUIREMENTS, [plan_id=1016]\n\n(13) ShuffleQueryStage\nOutput [2]: [category_id#165L, item_cnt#166L]\nArguments: 1\n\n(14) AQEShuffleRead\nInput [2]: [category_id#165L, item_cnt#166L]\nArguments: coalesced\n\n(15) Sort [codegen id : 4]\nInput [2]: [category_id#165L, item_cnt#166L]\nArguments: [category_id#165L ASC NULLS FIRST], false, 0\n\n(16) SortMergeJoin(skew=true) [codegen id : 5]\nLeft keys [1]: [category_id#159L]\nRight keys [1]: [category_id#165L]\nJoin type: Inner\nJoin condition: None\n\n(17) Project [codegen id : 5]\nOutput [5]: [user_id#157L, item_id#158L, behavior_type#160, event_ts#161L, item_cnt#166L]\nInput [7]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L, category_id#165L, item_cnt#166L]\n\n(18) ResultQueryStage\nOutput [5]: [user_id#157L, item_id#158L, behavior_type#160, event_ts#161L, item_cnt#166L]\nArguments: 2\n\n(19) Filter\nInput [6]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L, dt#164]\nCondition : isnotnull(category_id#159L)\n\n(20) Project\nOutput [5]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L]\nInput [6]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L, dt#164]\n\n(21) Exchange\nInput [5]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L]\nArguments: hashpartitioning(category_id#159L, 200), ENSURE_REQUIREMENTS, [plan_id=969]\n\n(22) Sort\nInput [5]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L]\nArguments: [category_id#159L ASC NULLS FIRST], false, 0\n\n(23) Filter\nInput [2]: [category_id#165L, item_cnt#166L]\nCondition : isnotnull(category_id#165L)\n\n(24) Exchange\nInput [2]: [category_id#165L, item_cnt#166L]\nArguments: hashpartitioning(category_id#165L, 200), ENSURE_REQUIREMENTS, [plan_id=970]\n\n(25) Sort\nInput [2]: [category_id#165L, item_cnt#166L]\nArguments: [category_id#165L ASC NULLS FIRST], false, 0\n\n(26) SortMergeJoin\nLeft keys [1]: [category_id#159L]\nRight keys [1]: [category_id#165L]\nJoin type: Inner\nJoin condition: None\n\n(27) Project\nOutput [5]: [user_id#157L, item_id#158L, behavior_type#160, event_ts#161L, item_cnt#166L]\nInput [7]: [user_id#157L, item_id#158L, category_id#159L, behavior_type#160, event_ts#161L, category_id#165L, item_cnt#166L]\n\n(28) AdaptiveSparkPlan\nOutput [5]: [user_id#157L, item_id#158L, behavior_type#160, event_ts#161L, item_cnt#166L]\nArguments: isFinalPlan=true\n\n(29) OverwriteByExpression noop-table\nInput [5]: [user_id#157L, item_id#158L, behavior_type#160, event_ts#161L, item_cnt#166L]\nArguments: NoopWrite\n\n"
+    },
+    {
+     "seconds": 9.14,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 44,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 1,
+       "executor_run_ms": 73,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 143025,
+       "task_ms_min_p50_p95_max": [
+        73,
+        73,
+        73,
+        73
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 45,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 17,
+       "executor_run_ms": 39577,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 1899579290,
+       "task_ms_min_p50_p95_max": [
+        1277,
+        2056,
+        2949,
+        2949
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 48,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 145,
+       "executor_run_ms": 23980,
+       "shuffle_read_records": 100106215,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        27,
+        172,
+        240,
+        324
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        102907,
+        732684,
+        1011750,
+        1330124
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": true,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (29)\n+- AdaptiveSparkPlan (28)\n   +- == Final Plan ==\n      ResultQueryStage (18), Statistics(sizeInBytes=8.0 EiB)\n      +- * Project (17)\n         +- * SortMergeJoin(skew=true) Inner (16)\n            :- * Sort (8)\n            :  +- AQEShuffleRead (7), coalesced and skewed\n            :     +- ShuffleQueryStage (6), Statistics(sizeInBytes=5.2 GiB, rowCount=1.00E+8)\n            :        +- Exchange (5)\n            :           +- * Project (4)\n            :              +- * Filter (3)\n            :                 +- * ColumnarToRow (2)\n            :                    +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n            +- * Sort (15)\n               +- AQEShuffleRead (14), coalesced\n                  +- ShuffleQueryStage (13), Statistics(sizeInBytes=221.2 KiB, rowCount=9.44E+3)\n                     +- Exchange (12)\n                        +- * Filter (11)\n                           +- * ColumnarToRow (10)\n                              +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n   +- == Initial Plan ==\n      Project (27)\n      +- SortMergeJoin Inner (26)\n         :- Sort (22)\n         :  +- Exchange (21)\n         :     +- Project (20)\n         :        +- Filter (19)\n         :           +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n         +- Sort (25)\n            +- Exchange (24)\n               +- Filter (23)\n                  +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L, dt#174]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L, dt#174]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L, dt#174]\nCondition : isnotnull(category_id#169L)\n\n(4) Project [codegen id : 1]\nOutput [5]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L]\nInput [6]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L, dt#174]\n\n(5) Exchange\nInput [5]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L]\nArguments: hashpartitioning(category_id#169L, 200), ENSURE_REQUIREMENTS, [plan_id=1140]\n\n(6) ShuffleQueryStage\nOutput [5]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L]\nArguments: 0\n\n(7) AQEShuffleRead\nInput [5]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L]\nArguments: coalesced and skewed\n\n(8) Sort [codegen id : 3]\nInput [5]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L]\nArguments: [category_id#169L ASC NULLS FIRST], false, 0\n\n(9) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#175L, item_cnt#176L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(10) ColumnarToRow [codegen id : 2]\nInput [2]: [category_id#175L, item_cnt#176L]\n\n(11) Filter [codegen id : 2]\nInput [2]: [category_id#175L, item_cnt#176L]\nCondition : isnotnull(category_id#175L)\n\n(12) Exchange\nInput [2]: [category_id#175L, item_cnt#176L]\nArguments: hashpartitioning(category_id#175L, 200), ENSURE_REQUIREMENTS, [plan_id=1164]\n\n(13) ShuffleQueryStage\nOutput [2]: [category_id#175L, item_cnt#176L]\nArguments: 1\n\n(14) AQEShuffleRead\nInput [2]: [category_id#175L, item_cnt#176L]\nArguments: coalesced\n\n(15) Sort [codegen id : 4]\nInput [2]: [category_id#175L, item_cnt#176L]\nArguments: [category_id#175L ASC NULLS FIRST], false, 0\n\n(16) SortMergeJoin(skew=true) [codegen id : 5]\nLeft keys [1]: [category_id#169L]\nRight keys [1]: [category_id#175L]\nJoin type: Inner\nJoin condition: None\n\n(17) Project [codegen id : 5]\nOutput [5]: [user_id#167L, item_id#168L, behavior_type#170, event_ts#171L, item_cnt#176L]\nInput [7]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L, category_id#175L, item_cnt#176L]\n\n(18) ResultQueryStage\nOutput [5]: [user_id#167L, item_id#168L, behavior_type#170, event_ts#171L, item_cnt#176L]\nArguments: 2\n\n(19) Filter\nInput [6]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L, dt#174]\nCondition : isnotnull(category_id#169L)\n\n(20) Project\nOutput [5]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L]\nInput [6]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L, dt#174]\n\n(21) Exchange\nInput [5]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L]\nArguments: hashpartitioning(category_id#169L, 200), ENSURE_REQUIREMENTS, [plan_id=1117]\n\n(22) Sort\nInput [5]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L]\nArguments: [category_id#169L ASC NULLS FIRST], false, 0\n\n(23) Filter\nInput [2]: [category_id#175L, item_cnt#176L]\nCondition : isnotnull(category_id#175L)\n\n(24) Exchange\nInput [2]: [category_id#175L, item_cnt#176L]\nArguments: hashpartitioning(category_id#175L, 200), ENSURE_REQUIREMENTS, [plan_id=1118]\n\n(25) Sort\nInput [2]: [category_id#175L, item_cnt#176L]\nArguments: [category_id#175L ASC NULLS FIRST], false, 0\n\n(26) SortMergeJoin\nLeft keys [1]: [category_id#169L]\nRight keys [1]: [category_id#175L]\nJoin type: Inner\nJoin condition: None\n\n(27) Project\nOutput [5]: [user_id#167L, item_id#168L, behavior_type#170, event_ts#171L, item_cnt#176L]\nInput [7]: [user_id#167L, item_id#168L, category_id#169L, behavior_type#170, event_ts#171L, category_id#175L, item_cnt#176L]\n\n(28) AdaptiveSparkPlan\nOutput [5]: [user_id#167L, item_id#168L, behavior_type#170, event_ts#171L, item_cnt#176L]\nArguments: isFinalPlan=true\n\n(29) OverwriteByExpression noop-table\nInput [5]: [user_id#167L, item_id#168L, behavior_type#170, event_ts#171L, item_cnt#176L]\nArguments: NoopWrite\n\n"
+    },
+    {
+     "seconds": 8.43,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 49,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 1,
+       "executor_run_ms": 46,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 9437,
+       "shuffle_write_bytes": 143025,
+       "task_ms_min_p50_p95_max": [
+        46,
+        46,
+        46,
+        46
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 50,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 17,
+       "executor_run_ms": 33144,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 1899579290,
+       "task_ms_min_p50_p95_max": [
+        1181,
+        2026,
+        2187,
+        2187
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 53,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 145,
+       "executor_run_ms": 24484,
+       "shuffle_read_records": 100106215,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        26,
+        172,
+        242,
+        324
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        102907,
+        732684,
+        1011750,
+        1330124
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": true,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (29)\n+- AdaptiveSparkPlan (28)\n   +- == Final Plan ==\n      ResultQueryStage (18), Statistics(sizeInBytes=8.0 EiB)\n      +- * Project (17)\n         +- * SortMergeJoin(skew=true) Inner (16)\n            :- * Sort (8)\n            :  +- AQEShuffleRead (7), coalesced and skewed\n            :     +- ShuffleQueryStage (6), Statistics(sizeInBytes=5.2 GiB, rowCount=1.00E+8)\n            :        +- Exchange (5)\n            :           +- * Project (4)\n            :              +- * Filter (3)\n            :                 +- * ColumnarToRow (2)\n            :                    +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n            +- * Sort (15)\n               +- AQEShuffleRead (14), coalesced\n                  +- ShuffleQueryStage (13), Statistics(sizeInBytes=221.2 KiB, rowCount=9.44E+3)\n                     +- Exchange (12)\n                        +- * Filter (11)\n                           +- * ColumnarToRow (10)\n                              +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n   +- == Initial Plan ==\n      Project (27)\n      +- SortMergeJoin Inner (26)\n         :- Sort (22)\n         :  +- Exchange (21)\n         :     +- Project (20)\n         :        +- Filter (19)\n         :           +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n         +- Sort (25)\n            +- Exchange (24)\n               +- Filter (23)\n                  +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (9)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L, dt#184]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L, dt#184]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L, dt#184]\nCondition : isnotnull(category_id#179L)\n\n(4) Project [codegen id : 1]\nOutput [5]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L]\nInput [6]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L, dt#184]\n\n(5) Exchange\nInput [5]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L]\nArguments: hashpartitioning(category_id#179L, 200), ENSURE_REQUIREMENTS, [plan_id=1288]\n\n(6) ShuffleQueryStage\nOutput [5]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L]\nArguments: 0\n\n(7) AQEShuffleRead\nInput [5]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L]\nArguments: coalesced and skewed\n\n(8) Sort [codegen id : 3]\nInput [5]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L]\nArguments: [category_id#179L ASC NULLS FIRST], false, 0\n\n(9) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#185L, item_cnt#186L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(10) ColumnarToRow [codegen id : 2]\nInput [2]: [category_id#185L, item_cnt#186L]\n\n(11) Filter [codegen id : 2]\nInput [2]: [category_id#185L, item_cnt#186L]\nCondition : isnotnull(category_id#185L)\n\n(12) Exchange\nInput [2]: [category_id#185L, item_cnt#186L]\nArguments: hashpartitioning(category_id#185L, 200), ENSURE_REQUIREMENTS, [plan_id=1312]\n\n(13) ShuffleQueryStage\nOutput [2]: [category_id#185L, item_cnt#186L]\nArguments: 1\n\n(14) AQEShuffleRead\nInput [2]: [category_id#185L, item_cnt#186L]\nArguments: coalesced\n\n(15) Sort [codegen id : 4]\nInput [2]: [category_id#185L, item_cnt#186L]\nArguments: [category_id#185L ASC NULLS FIRST], false, 0\n\n(16) SortMergeJoin(skew=true) [codegen id : 5]\nLeft keys [1]: [category_id#179L]\nRight keys [1]: [category_id#185L]\nJoin type: Inner\nJoin condition: None\n\n(17) Project [codegen id : 5]\nOutput [5]: [user_id#177L, item_id#178L, behavior_type#180, event_ts#181L, item_cnt#186L]\nInput [7]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L, category_id#185L, item_cnt#186L]\n\n(18) ResultQueryStage\nOutput [5]: [user_id#177L, item_id#178L, behavior_type#180, event_ts#181L, item_cnt#186L]\nArguments: 2\n\n(19) Filter\nInput [6]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L, dt#184]\nCondition : isnotnull(category_id#179L)\n\n(20) Project\nOutput [5]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L]\nInput [6]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L, dt#184]\n\n(21) Exchange\nInput [5]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L]\nArguments: hashpartitioning(category_id#179L, 200), ENSURE_REQUIREMENTS, [plan_id=1265]\n\n(22) Sort\nInput [5]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L]\nArguments: [category_id#179L ASC NULLS FIRST], false, 0\n\n(23) Filter\nInput [2]: [category_id#185L, item_cnt#186L]\nCondition : isnotnull(category_id#185L)\n\n(24) Exchange\nInput [2]: [category_id#185L, item_cnt#186L]\nArguments: hashpartitioning(category_id#185L, 200), ENSURE_REQUIREMENTS, [plan_id=1266]\n\n(25) Sort\nInput [2]: [category_id#185L, item_cnt#186L]\nArguments: [category_id#185L ASC NULLS FIRST], false, 0\n\n(26) SortMergeJoin\nLeft keys [1]: [category_id#179L]\nRight keys [1]: [category_id#185L]\nJoin type: Inner\nJoin condition: None\n\n(27) Project\nOutput [5]: [user_id#177L, item_id#178L, behavior_type#180, event_ts#181L, item_cnt#186L]\nInput [7]: [user_id#177L, item_id#178L, category_id#179L, behavior_type#180, event_ts#181L, category_id#185L, item_cnt#186L]\n\n(28) AdaptiveSparkPlan\nOutput [5]: [user_id#177L, item_id#178L, behavior_type#180, event_ts#181L, item_cnt#186L]\nArguments: isFinalPlan=true\n\n(29) OverwriteByExpression noop-table\nInput [5]: [user_id#177L, item_id#178L, behavior_type#180, event_ts#181L, item_cnt#186L]\nArguments: NoopWrite\n\n"
+    }
+   ]
+  },
+  {
+   "name": "join_salted_aqe_off",
+   "group": "join",
+   "conf": {
+    "spark.sql.autoBroadcastJoinThreshold": "-1",
+    "spark.sql.adaptive.enabled": "false"
+   },
+   "reps": [
+    {
+     "seconds": 12.94,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 54,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 17,
+       "executor_run_ms": 41857,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 2487436149,
+       "task_ms_min_p50_p95_max": [
+        1489,
+        2536,
+        2722,
+        2722
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 55,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 1,
+       "executor_run_ms": 120,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 150992,
+       "shuffle_write_bytes": 2062775,
+       "task_ms_min_p50_p95_max": [
+        120,
+        120,
+        120,
+        120
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 56,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 200,
+       "executor_run_ms": 49933,
+       "shuffle_read_records": 100246174,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        111,
+        234,
+        441,
+        857
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        205432,
+        486061,
+        823570,
+        1243775
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (15)\n+- * Project (14)\n   +- * SortMergeJoin Inner (13)\n      :- * Sort (6)\n      :  +- Exchange (5)\n      :     +- * Project (4)\n      :        +- * Filter (3)\n      :           +- * ColumnarToRow (2)\n      :              +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n      +- * Sort (12)\n         +- Exchange (11)\n            +- * Generate (10)\n               +- * Filter (9)\n                  +- * ColumnarToRow (8)\n                     +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (7)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#188L, item_id#189L, category_id#190L, behavior_type#191, event_ts#192L, dt#195]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#188L, item_id#189L, category_id#190L, behavior_type#191, event_ts#192L, dt#195]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#188L, item_id#189L, category_id#190L, behavior_type#191, event_ts#192L, dt#195]\nCondition : (isnotnull(category_id#190L) AND isnotnull(pmod(hash(user_id#188L, item_id#189L, event_ts#192L, 42), 16)))\n\n(4) Project [codegen id : 1]\nOutput [6]: [user_id#188L, item_id#189L, category_id#190L, behavior_type#191, event_ts#192L, pmod(hash(user_id#188L, item_id#189L, event_ts#192L, 42), 16) AS salt#187]\nInput [6]: [user_id#188L, item_id#189L, category_id#190L, behavior_type#191, event_ts#192L, dt#195]\n\n(5) Exchange\nInput [6]: [user_id#188L, item_id#189L, category_id#190L, behavior_type#191, event_ts#192L, salt#187]\nArguments: hashpartitioning(category_id#190L, salt#187, 200), ENSURE_REQUIREMENTS, [plan_id=1443]\n\n(6) Sort [codegen id : 2]\nInput [6]: [user_id#188L, item_id#189L, category_id#190L, behavior_type#191, event_ts#192L, salt#187]\nArguments: [category_id#190L ASC NULLS FIRST, salt#187 ASC NULLS FIRST], false, 0\n\n(7) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#196L, item_cnt#197L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(8) ColumnarToRow [codegen id : 3]\nInput [2]: [category_id#196L, item_cnt#197L]\n\n(9) Filter [codegen id : 3]\nInput [2]: [category_id#196L, item_cnt#197L]\nCondition : isnotnull(category_id#196L)\n\n(10) Generate [codegen id : 3]\nInput [2]: [category_id#196L, item_cnt#197L]\nArguments: explode(org.apache.spark.sql.catalyst.expressions.UnsafeArrayData@f1dd012b), [category_id#196L, item_cnt#197L], false, [salt#198]\n\n(11) Exchange\nInput [3]: [category_id#196L, item_cnt#197L, salt#198]\nArguments: hashpartitioning(category_id#196L, salt#198, 200), ENSURE_REQUIREMENTS, [plan_id=1453]\n\n(12) Sort [codegen id : 4]\nInput [3]: [category_id#196L, item_cnt#197L, salt#198]\nArguments: [category_id#196L ASC NULLS FIRST, salt#198 ASC NULLS FIRST], false, 0\n\n(13) SortMergeJoin [codegen id : 5]\nLeft keys [2]: [category_id#190L, salt#187]\nRight keys [2]: [category_id#196L, salt#198]\nJoin type: Inner\nJoin condition: None\n\n(14) Project [codegen id : 5]\nOutput [5]: [user_id#188L, item_id#189L, behavior_type#191, event_ts#192L, item_cnt#197L]\nInput [9]: [user_id#188L, item_id#189L, category_id#190L, behavior_type#191, event_ts#192L, salt#187, category_id#196L, item_cnt#197L, salt#198]\n\n(15) OverwriteByExpression noop-table\nInput [5]: [user_id#188L, item_id#189L, behavior_type#191, event_ts#192L, item_cnt#197L]\nArguments: NoopWrite\n\n"
+    },
+    {
+     "seconds": 12.17,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 57,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 17,
+       "executor_run_ms": 41064,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 2487436149,
+       "task_ms_min_p50_p95_max": [
+        1581,
+        2422,
+        2675,
+        2675
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 58,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 1,
+       "executor_run_ms": 175,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 150992,
+       "shuffle_write_bytes": 2062775,
+       "task_ms_min_p50_p95_max": [
+        175,
+        175,
+        175,
+        175
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 59,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 200,
+       "executor_run_ms": 46189,
+       "shuffle_read_records": 100246174,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        104,
+        221,
+        356,
+        513
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        205432,
+        486061,
+        823570,
+        1243775
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (15)\n+- * Project (14)\n   +- * SortMergeJoin Inner (13)\n      :- * Sort (6)\n      :  +- Exchange (5)\n      :     +- * Project (4)\n      :        +- * Filter (3)\n      :           +- * ColumnarToRow (2)\n      :              +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n      +- * Sort (12)\n         +- Exchange (11)\n            +- * Generate (10)\n               +- * Filter (9)\n                  +- * ColumnarToRow (8)\n                     +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (7)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#200L, item_id#201L, category_id#202L, behavior_type#203, event_ts#204L, dt#207]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#200L, item_id#201L, category_id#202L, behavior_type#203, event_ts#204L, dt#207]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#200L, item_id#201L, category_id#202L, behavior_type#203, event_ts#204L, dt#207]\nCondition : (isnotnull(category_id#202L) AND isnotnull(pmod(hash(user_id#200L, item_id#201L, event_ts#204L, 42), 16)))\n\n(4) Project [codegen id : 1]\nOutput [6]: [user_id#200L, item_id#201L, category_id#202L, behavior_type#203, event_ts#204L, pmod(hash(user_id#200L, item_id#201L, event_ts#204L, 42), 16) AS salt#199]\nInput [6]: [user_id#200L, item_id#201L, category_id#202L, behavior_type#203, event_ts#204L, dt#207]\n\n(5) Exchange\nInput [6]: [user_id#200L, item_id#201L, category_id#202L, behavior_type#203, event_ts#204L, salt#199]\nArguments: hashpartitioning(category_id#202L, salt#199, 200), ENSURE_REQUIREMENTS, [plan_id=1543]\n\n(6) Sort [codegen id : 2]\nInput [6]: [user_id#200L, item_id#201L, category_id#202L, behavior_type#203, event_ts#204L, salt#199]\nArguments: [category_id#202L ASC NULLS FIRST, salt#199 ASC NULLS FIRST], false, 0\n\n(7) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#208L, item_cnt#209L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(8) ColumnarToRow [codegen id : 3]\nInput [2]: [category_id#208L, item_cnt#209L]\n\n(9) Filter [codegen id : 3]\nInput [2]: [category_id#208L, item_cnt#209L]\nCondition : isnotnull(category_id#208L)\n\n(10) Generate [codegen id : 3]\nInput [2]: [category_id#208L, item_cnt#209L]\nArguments: explode(org.apache.spark.sql.catalyst.expressions.UnsafeArrayData@f1dd012b), [category_id#208L, item_cnt#209L], false, [salt#210]\n\n(11) Exchange\nInput [3]: [category_id#208L, item_cnt#209L, salt#210]\nArguments: hashpartitioning(category_id#208L, salt#210, 200), ENSURE_REQUIREMENTS, [plan_id=1553]\n\n(12) Sort [codegen id : 4]\nInput [3]: [category_id#208L, item_cnt#209L, salt#210]\nArguments: [category_id#208L ASC NULLS FIRST, salt#210 ASC NULLS FIRST], false, 0\n\n(13) SortMergeJoin [codegen id : 5]\nLeft keys [2]: [category_id#202L, salt#199]\nRight keys [2]: [category_id#208L, salt#210]\nJoin type: Inner\nJoin condition: None\n\n(14) Project [codegen id : 5]\nOutput [5]: [user_id#200L, item_id#201L, behavior_type#203, event_ts#204L, item_cnt#209L]\nInput [9]: [user_id#200L, item_id#201L, category_id#202L, behavior_type#203, event_ts#204L, salt#199, category_id#208L, item_cnt#209L, salt#210]\n\n(15) OverwriteByExpression noop-table\nInput [5]: [user_id#200L, item_id#201L, behavior_type#203, event_ts#204L, item_cnt#209L]\nArguments: NoopWrite\n\n"
+    },
+    {
+     "seconds": 12.57,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 60,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 1,
+       "executor_run_ms": 121,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 150992,
+       "shuffle_write_bytes": 2062775,
+       "task_ms_min_p50_p95_max": [
+        121,
+        121,
+        121,
+        121
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 61,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 17,
+       "executor_run_ms": 45696,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 100095182,
+       "shuffle_write_bytes": 2487436149,
+       "task_ms_min_p50_p95_max": [
+        1542,
+        2423,
+        3454,
+        3454
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 62,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 200,
+       "executor_run_ms": 45349,
+       "shuffle_read_records": 100246174,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        101,
+        223,
+        355,
+        523
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        205432,
+        486061,
+        823570,
+        1243775
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": true,
+      "broadcast_hash_join": false
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (15)\n+- * Project (14)\n   +- * SortMergeJoin Inner (13)\n      :- * Sort (6)\n      :  +- Exchange (5)\n      :     +- * Project (4)\n      :        +- * Filter (3)\n      :           +- * ColumnarToRow (2)\n      :              +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n      +- * Sort (12)\n         +- Exchange (11)\n            +- * Generate (10)\n               +- * Filter (9)\n                  +- * ColumnarToRow (8)\n                     +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (7)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#212L, item_id#213L, category_id#214L, behavior_type#215, event_ts#216L, dt#219]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 1]\nInput [6]: [user_id#212L, item_id#213L, category_id#214L, behavior_type#215, event_ts#216L, dt#219]\n\n(3) Filter [codegen id : 1]\nInput [6]: [user_id#212L, item_id#213L, category_id#214L, behavior_type#215, event_ts#216L, dt#219]\nCondition : (isnotnull(category_id#214L) AND isnotnull(pmod(hash(user_id#212L, item_id#213L, event_ts#216L, 42), 16)))\n\n(4) Project [codegen id : 1]\nOutput [6]: [user_id#212L, item_id#213L, category_id#214L, behavior_type#215, event_ts#216L, pmod(hash(user_id#212L, item_id#213L, event_ts#216L, 42), 16) AS salt#211]\nInput [6]: [user_id#212L, item_id#213L, category_id#214L, behavior_type#215, event_ts#216L, dt#219]\n\n(5) Exchange\nInput [6]: [user_id#212L, item_id#213L, category_id#214L, behavior_type#215, event_ts#216L, salt#211]\nArguments: hashpartitioning(category_id#214L, salt#211, 200), ENSURE_REQUIREMENTS, [plan_id=1643]\n\n(6) Sort [codegen id : 2]\nInput [6]: [user_id#212L, item_id#213L, category_id#214L, behavior_type#215, event_ts#216L, salt#211]\nArguments: [category_id#214L ASC NULLS FIRST, salt#211 ASC NULLS FIRST], false, 0\n\n(7) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#220L, item_cnt#221L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(8) ColumnarToRow [codegen id : 3]\nInput [2]: [category_id#220L, item_cnt#221L]\n\n(9) Filter [codegen id : 3]\nInput [2]: [category_id#220L, item_cnt#221L]\nCondition : isnotnull(category_id#220L)\n\n(10) Generate [codegen id : 3]\nInput [2]: [category_id#220L, item_cnt#221L]\nArguments: explode(org.apache.spark.sql.catalyst.expressions.UnsafeArrayData@f1dd012b), [category_id#220L, item_cnt#221L], false, [salt#222]\n\n(11) Exchange\nInput [3]: [category_id#220L, item_cnt#221L, salt#222]\nArguments: hashpartitioning(category_id#220L, salt#222, 200), ENSURE_REQUIREMENTS, [plan_id=1653]\n\n(12) Sort [codegen id : 4]\nInput [3]: [category_id#220L, item_cnt#221L, salt#222]\nArguments: [category_id#220L ASC NULLS FIRST, salt#222 ASC NULLS FIRST], false, 0\n\n(13) SortMergeJoin [codegen id : 5]\nLeft keys [2]: [category_id#214L, salt#211]\nRight keys [2]: [category_id#220L, salt#222]\nJoin type: Inner\nJoin condition: None\n\n(14) Project [codegen id : 5]\nOutput [5]: [user_id#212L, item_id#213L, behavior_type#215, event_ts#216L, item_cnt#221L]\nInput [9]: [user_id#212L, item_id#213L, category_id#214L, behavior_type#215, event_ts#216L, salt#211, category_id#220L, item_cnt#221L, salt#222]\n\n(15) OverwriteByExpression noop-table\nInput [5]: [user_id#212L, item_id#213L, behavior_type#215, event_ts#216L, item_cnt#221L]\nArguments: NoopWrite\n\n"
+    }
+   ]
+  },
+  {
+   "name": "join_broadcast",
+   "group": "join",
+   "conf": {
+    "spark.sql.adaptive.enabled": "false"
+   },
+   "reps": [
+    {
+     "seconds": 1.79,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 63,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 1,
+       "executor_run_ms": 7,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        7,
+        7,
+        7,
+        7
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 64,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 17,
+       "executor_run_ms": 11665,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        339,
+        618,
+        928,
+        928
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": false,
+      "broadcast_hash_join": true
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (11)\n+- * Project (10)\n   +- * BroadcastHashJoin Inner BuildRight (9)\n      :- * Project (4)\n      :  +- * Filter (3)\n      :     +- * ColumnarToRow (2)\n      :        +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n      +- BroadcastExchange (8)\n         +- * Filter (7)\n            +- * ColumnarToRow (6)\n               +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (5)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#223L, item_id#224L, category_id#225L, behavior_type#226, event_ts#227L, dt#230]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 2]\nInput [6]: [user_id#223L, item_id#224L, category_id#225L, behavior_type#226, event_ts#227L, dt#230]\n\n(3) Filter [codegen id : 2]\nInput [6]: [user_id#223L, item_id#224L, category_id#225L, behavior_type#226, event_ts#227L, dt#230]\nCondition : isnotnull(category_id#225L)\n\n(4) Project [codegen id : 2]\nOutput [5]: [user_id#223L, item_id#224L, category_id#225L, behavior_type#226, event_ts#227L]\nInput [6]: [user_id#223L, item_id#224L, category_id#225L, behavior_type#226, event_ts#227L, dt#230]\n\n(5) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#231L, item_cnt#232L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(6) ColumnarToRow [codegen id : 1]\nInput [2]: [category_id#231L, item_cnt#232L]\n\n(7) Filter [codegen id : 1]\nInput [2]: [category_id#231L, item_cnt#232L]\nCondition : isnotnull(category_id#231L)\n\n(8) BroadcastExchange\nInput [2]: [category_id#231L, item_cnt#232L]\nArguments: HashedRelationBroadcastMode(List(input[0, bigint, false]),false), [plan_id=1733]\n\n(9) BroadcastHashJoin [codegen id : 2]\nLeft keys [1]: [category_id#225L]\nRight keys [1]: [category_id#231L]\nJoin type: Inner\nJoin condition: None\n\n(10) Project [codegen id : 2]\nOutput [5]: [user_id#223L, item_id#224L, behavior_type#226, event_ts#227L, item_cnt#232L]\nInput [7]: [user_id#223L, item_id#224L, category_id#225L, behavior_type#226, event_ts#227L, category_id#231L, item_cnt#232L]\n\n(11) OverwriteByExpression noop-table\nInput [5]: [user_id#223L, item_id#224L, behavior_type#226, event_ts#227L, item_cnt#232L]\nArguments: NoopWrite\n\n"
+    },
+    {
+     "seconds": 1.36,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 65,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 1,
+       "executor_run_ms": 4,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        4,
+        4,
+        4,
+        4
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 66,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 17,
+       "executor_run_ms": 9148,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        345,
+        551,
+        685,
+        685
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": false,
+      "broadcast_hash_join": true
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (11)\n+- * Project (10)\n   +- * BroadcastHashJoin Inner BuildRight (9)\n      :- * Project (4)\n      :  +- * Filter (3)\n      :     +- * ColumnarToRow (2)\n      :        +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n      +- BroadcastExchange (8)\n         +- * Filter (7)\n            +- * ColumnarToRow (6)\n               +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (5)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#233L, item_id#234L, category_id#235L, behavior_type#236, event_ts#237L, dt#240]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 2]\nInput [6]: [user_id#233L, item_id#234L, category_id#235L, behavior_type#236, event_ts#237L, dt#240]\n\n(3) Filter [codegen id : 2]\nInput [6]: [user_id#233L, item_id#234L, category_id#235L, behavior_type#236, event_ts#237L, dt#240]\nCondition : isnotnull(category_id#235L)\n\n(4) Project [codegen id : 2]\nOutput [5]: [user_id#233L, item_id#234L, category_id#235L, behavior_type#236, event_ts#237L]\nInput [6]: [user_id#233L, item_id#234L, category_id#235L, behavior_type#236, event_ts#237L, dt#240]\n\n(5) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#241L, item_cnt#242L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(6) ColumnarToRow [codegen id : 1]\nInput [2]: [category_id#241L, item_cnt#242L]\n\n(7) Filter [codegen id : 1]\nInput [2]: [category_id#241L, item_cnt#242L]\nCondition : isnotnull(category_id#241L)\n\n(8) BroadcastExchange\nInput [2]: [category_id#241L, item_cnt#242L]\nArguments: HashedRelationBroadcastMode(List(input[0, bigint, false]),false), [plan_id=1797]\n\n(9) BroadcastHashJoin [codegen id : 2]\nLeft keys [1]: [category_id#235L]\nRight keys [1]: [category_id#241L]\nJoin type: Inner\nJoin condition: None\n\n(10) Project [codegen id : 2]\nOutput [5]: [user_id#233L, item_id#234L, behavior_type#236, event_ts#237L, item_cnt#242L]\nInput [7]: [user_id#233L, item_id#234L, category_id#235L, behavior_type#236, event_ts#237L, category_id#241L, item_cnt#242L]\n\n(11) OverwriteByExpression noop-table\nInput [5]: [user_id#233L, item_id#234L, behavior_type#236, event_ts#237L, item_cnt#242L]\nArguments: NoopWrite\n\n"
+    },
+    {
+     "seconds": 1.44,
+     "result": null,
+     "stages": [
+      {
+       "stage_id": 67,
+       "name": "$anonfun$withThreadLocalCaptured$1 at CompletableFuture.java:1768",
+       "num_tasks": 1,
+       "executor_run_ms": 3,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        3,
+        3,
+        3,
+        3
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "stage_id": 68,
+       "name": "save at DirectMethodHandleAccessor.java:103",
+       "num_tasks": 17,
+       "executor_run_ms": 9494,
+       "shuffle_read_records": 0,
+       "shuffle_write_records": 0,
+       "shuffle_write_bytes": 0,
+       "task_ms_min_p50_p95_max": [
+        332,
+        558,
+        727,
+        727
+       ],
+       "task_shuffle_read_records_min_p50_p95_max": [
+        0,
+        0,
+        0,
+        0
+       ]
+      }
+     ],
+     "plan_flags": {
+      "skew_join_split": false,
+      "sort_merge_join": false,
+      "broadcast_hash_join": true
+     },
+     "plan": "== Physical Plan ==\nOverwriteByExpression noop-table (11)\n+- * Project (10)\n   +- * BroadcastHashJoin Inner BuildRight (9)\n      :- * Project (4)\n      :  +- * Filter (3)\n      :     +- * ColumnarToRow (2)\n      :        +- Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc (1)\n      +- BroadcastExchange (8)\n         +- * Filter (7)\n            +- * ColumnarToRow (6)\n               +- Scan parquet spark_catalog.tb_full.tmp_skew_dim_category (5)\n\n\n(1) Scan parquet spark_catalog.tb_full.dwd_user_behavior_inc\nOutput [6]: [user_id#243L, item_id#244L, category_id#245L, behavior_type#246, event_ts#247L, dt#250]\nBatched: true\nLocation: CatalogFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/dwd_user_behavior_inc]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<user_id:bigint,item_id:bigint,category_id:bigint,behavior_type:string,event_ts:bigint>\n\n(2) ColumnarToRow [codegen id : 2]\nInput [6]: [user_id#243L, item_id#244L, category_id#245L, behavior_type#246, event_ts#247L, dt#250]\n\n(3) Filter [codegen id : 2]\nInput [6]: [user_id#243L, item_id#244L, category_id#245L, behavior_type#246, event_ts#247L, dt#250]\nCondition : isnotnull(category_id#245L)\n\n(4) Project [codegen id : 2]\nOutput [5]: [user_id#243L, item_id#244L, category_id#245L, behavior_type#246, event_ts#247L]\nInput [6]: [user_id#243L, item_id#244L, category_id#245L, behavior_type#246, event_ts#247L, dt#250]\n\n(5) Scan parquet spark_catalog.tb_full.tmp_skew_dim_category\nOutput [2]: [category_id#251L, item_cnt#252L]\nBatched: true\nLocation: InMemoryFileIndex [file:/Users/lyh/Projects/taobao-behavior-warehouse/spark-warehouse/tb_full.db/tmp_skew_dim_category]\nPushedFilters: [IsNotNull(category_id)]\nReadSchema: struct<category_id:bigint,item_cnt:bigint>\n\n(6) ColumnarToRow [codegen id : 1]\nInput [2]: [category_id#251L, item_cnt#252L]\n\n(7) Filter [codegen id : 1]\nInput [2]: [category_id#251L, item_cnt#252L]\nCondition : isnotnull(category_id#251L)\n\n(8) BroadcastExchange\nInput [2]: [category_id#251L, item_cnt#252L]\nArguments: HashedRelationBroadcastMode(List(input[0, bigint, false]),false), [plan_id=1861]\n\n(9) BroadcastHashJoin [codegen id : 2]\nLeft keys [1]: [category_id#245L]\nRight keys [1]: [category_id#251L]\nJoin type: Inner\nJoin condition: None\n\n(10) Project [codegen id : 2]\nOutput [5]: [user_id#243L, item_id#244L, behavior_type#246, event_ts#247L, item_cnt#252L]\nInput [7]: [user_id#243L, item_id#244L, category_id#245L, behavior_type#246, event_ts#247L, category_id#251L, item_cnt#252L]\n\n(11) OverwriteByExpression noop-table\nInput [5]: [user_id#243L, item_id#244L, behavior_type#246, event_ts#247L, item_cnt#252L]\nArguments: NoopWrite\n\n"
+    }
+   ]
+  }
+ ]
+}
