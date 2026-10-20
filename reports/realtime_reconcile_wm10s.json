@@ -1,0 +1,19 @@
+{
+ "run": "wm10s",
+ "watermark_delay_seconds": 10,
+ "flink_elapsed_seconds": 259.8,
+ "replay_rows": 100095182,
+ "injected_late_rows": 50270,
+ "injected_late_pv": 45168,
+ "hours": 216,
+ "hours_fully_matched": 0,
+ "hours_topn_same_items": 215,
+ "hours_topn_same_items_and_pv": 209,
+ "minutes": 12960,
+ "minutes_exact": 1841,
+ "minutes_unexplained": 0,
+ "pv_offline": 89660671,
+ "pv_realtime": 89615505,
+ "pv_dropped": 45166,
+ "minutes_uv_realtime_higher": 0
+}

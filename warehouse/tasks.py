@@ -5,7 +5,7 @@
 2. 跑之前检查上游分区是否存在，缺了就报错，不带着空数据往下算。
 偏移为负的依赖（如昨天的快照）要求按日期顺序回填，自依赖任务回填某天后要把之后的日期一并重跑。
 """
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Callable
 
 from pyspark.sql import SparkSession
@@ -28,7 +28,6 @@ class Task:
     runner: Callable | None = None  # 需要 Python 步骤的任务
     once: bool = False              # True：初始化时跑一次，不按天
     count_partition: bool = True    # 是否按 dt 统计产出行数
-    extra: dict = field(default_factory=dict)
 
 
 # ---------------------------------------------------------------- 表属性（拉链表处理水位）

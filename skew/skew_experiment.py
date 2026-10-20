@@ -20,7 +20,6 @@
 """
 import argparse
 import json
-import statistics
 import time
 import urllib.request
 from datetime import datetime

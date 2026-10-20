@@ -9,7 +9,6 @@
 """
 import argparse
 import shutil
-from pathlib import Path
 
 from warehouse import config
 from warehouse.spark_session import build_spark

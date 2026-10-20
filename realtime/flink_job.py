@@ -49,7 +49,17 @@ def main():
     conf = t_env.get_config()
     conf.set("parallelism.default", str(args.parallelism))
     conf.set("table.local-time-zone", "Asia/Shanghai")      # 窗口按北京时间对齐、输出北京时间
-    conf.set("execution.checkpointing.interval", "10s")     # 文件 sink 在 checkpoint 时提交，保证 exactly-once
+    # 文件 sink 在 checkpoint 成功时提交文件，保证 exactly-once。窗口状态（每分钟的去重用户、每小时各商品计数）
+    # 会超过本地默认的 JobManager 内存存储上限（5MB），所以 checkpoint 存到本地文件系统
+    ckpt_dir = out.parent / "_checkpoints" / out.name
+    shutil.rmtree(ckpt_dir, ignore_errors=True)
+    conf.set("execution.checkpointing.interval", "30s")
+    conf.set("execution.checkpointing.storage", "filesystem")
+    conf.set("execution.checkpointing.dir", ckpt_dir.as_uri())
+    # 出错时最多重启 2 次，之后直接失败，避免无限重启掩盖问题
+    conf.set("restart-strategy.type", "fixed-delay")
+    conf.set("restart-strategy.fixed-delay.attempts", "2")
+    conf.set("restart-strategy.fixed-delay.delay", "5s")
     conf.set("pipeline.name", f"user-behavior-realtime-wm{args.watermark_delay}s")
 
     t_env.execute_sql(f"""

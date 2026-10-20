@@ -21,7 +21,7 @@ from warehouse import config
 from warehouse.quality import QualityGateError, run_checks
 from warehouse.spark_session import build_spark
 from warehouse.sql_runner import run_sql_file
-from warehouse.tasks import (ONCE_TASKS, TASKS, ZIP_TABLE, ZIP_WATERMARK_KEY, Task, build_params,
+from warehouse.tasks import (ONCE_TASKS, ZIP_TABLE, ZIP_WATERMARK_KEY, Task, build_params,
                              daily_order, get_table_property)
 
 
