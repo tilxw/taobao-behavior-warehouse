@@ -104,12 +104,15 @@ def main():
         SELECT dt, day_name, pv_cnt, uv, active_user_cnt, buy_cnt, buy_user_cnt, pv_per_uv, buy_user_rate
         FROM {db}.ads_traffic_stats_1d ORDER BY dt""")],
         ["日期", "星期", "PV", "UV", "活跃用户", "购买次数", "购买用户", "人均浏览", "购买用户占比"])
-    L += ["", "### 有序转化漏斗", ""]
+    L += ["", "### 转化漏斗（strict = 有序 / 严格，non_strict = 无序 / 非严格）", ""]
     L += table_md([tuple(r) for r in q(f"""
-        SELECT dt, step1_pv_users, step2_cart_fav_users, step3_buy_users,
-               pv_to_cart_fav_rate, cart_fav_to_buy_rate, pv_to_buy_rate
-        FROM {db}.ads_conversion_funnel_1d ORDER BY dt""")],
-        ["日期", "浏览", "加购/收藏", "购买", "浏览→加购收藏", "加购收藏→购买", "浏览→购买"])
+        SELECT f.dt, f.funnel_type, f.step1_pv_users, f.step2_cart_fav_users, f.step3_buy_users,
+               f.pv_to_cart_fav_rate, f.cart_fav_to_buy_rate, f.pv_to_buy_rate,
+               round(f.step3_buy_users / t.buy_user_cnt, 4)
+        FROM {db}.ads_conversion_funnel_1d f JOIN {db}.ads_traffic_stats_1d t ON f.dt = t.dt
+        ORDER BY f.dt, f.funnel_type DESC""")],
+        ["日期", "口径", "浏览", "加购/收藏", "购买", "浏览→加购收藏", "加购收藏→购买", "浏览→购买",
+         "第 3 步占当天购买用户"])
     L += ["", "### 留存", ""]
     L += table_md([tuple(r) for r in q(f"""
         SELECT cohort_date, cohort_type, retention_day, cohort_size, retained_cnt, retention_rate

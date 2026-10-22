@@ -168,13 +168,14 @@ PARTITIONED BY (dt STRING)
 STORED AS PARQUET;
 
 CREATE TABLE IF NOT EXISTS ${db}.ads_conversion_funnel_1d (
-    step1_pv_users       BIGINT COMMENT '第 1 步：当天有浏览的用户数',
-    step2_cart_fav_users BIGINT COMMENT '第 2 步：首次浏览之后又加购或收藏的用户数',
-    step3_buy_users      BIGINT COMMENT '第 3 步：第 2 步之后又购买的用户数',
+    funnel_type          STRING COMMENT 'strict=有序（严格）漏斗，步骤须按时间先后完成；non_strict=无序（非严格）漏斗，当天做过即可，不看先后',
+    step1_pv_users       BIGINT COMMENT '第 1 步：当天有浏览的用户数（两种口径相同）',
+    step2_cart_fav_users BIGINT COMMENT '第 2 步：strict 为首次浏览之后又加购或收藏；non_strict 为当天有加购或收藏',
+    step3_buy_users      BIGINT COMMENT '第 3 步：strict 为第 2 步之后又购买；non_strict 为当天有购买（且满足前两步）',
     pv_to_cart_fav_rate  DOUBLE,
     cart_fav_to_buy_rate DOUBLE,
     pv_to_buy_rate       DOUBLE
-) COMMENT '当日有序转化漏斗（用户粒度，步骤须按时间先后完成）'
+) COMMENT '当日转化漏斗（用户粒度），每天两行：有序（严格）和无序（非严格）两种口径'
 PARTITIONED BY (dt STRING)
 STORED AS PARQUET;
 

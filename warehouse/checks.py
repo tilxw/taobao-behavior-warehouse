@@ -279,15 +279,32 @@ ADS_TRAFFIC_CHECKS = [
 ]
 
 ADS_FUNNEL_CHECKS = [
-    one_row("ads_conversion_funnel_1d"),
-    # 漏斗逐级不增；第 1 步（浏览用户）走 DWD 明细算，和走 DWS 汇总算的 UV 必须相等
+    pk_unique("ads_conversion_funnel_1d", ["funnel_type"]),
+    # 每天恰好两行：有序（严格）和无序（非严格）各一行
+    custom("two_funnel_types", "enum", "ads_conversion_funnel_1d", """
+        SELECT abs(count(*) - 2)
+               + IF(count_if(funnel_type = 'strict') = 1 AND count_if(funnel_type = 'non_strict') = 1, 0, 1) AS bad,
+               concat('rows=', count(*)) AS detail
+        FROM ${db}.ads_conversion_funnel_1d WHERE dt = '${dt}'"""),
+    # 每种口径都逐级不增；第 1 步（浏览用户）走 DWD 明细算，和走 DWS 汇总算的 UV 必须相等
     custom("monotonic_and_cross_check", "consistency", "ads_conversion_funnel_1d", """
-        SELECT IF(f.step2_cart_fav_users > f.step1_pv_users OR f.step3_buy_users > f.step2_cart_fav_users, 1, 0)
-               + abs(f.step1_pv_users - t.uv) AS bad,
-               concat('step1=', f.step1_pv_users, ' step2=', f.step2_cart_fav_users,
-                      ' step3=', f.step3_buy_users, ' traffic_uv=', t.uv) AS detail
+        SELECT count_if(f.step2_cart_fav_users > f.step1_pv_users
+                        OR f.step3_buy_users > f.step2_cart_fav_users
+                        OR f.step1_pv_users <> t.uv) AS bad,
+               concat_ws(' ', collect_list(concat(f.funnel_type, '=', f.step1_pv_users, '/',
+                                                  f.step2_cart_fav_users, '/', f.step3_buy_users)),
+                         concat('traffic_uv=', max(t.uv))) AS detail
         FROM (SELECT * FROM ${db}.ads_conversion_funnel_1d WHERE dt = '${dt}') f,
              (SELECT uv FROM ${db}.ads_traffic_stats_1d WHERE dt = '${dt}') t"""),
+    # 按顺序做完的用户，不看顺序时一定也算做完：严格漏斗的每一步都不会多于非严格漏斗
+    custom("strict_not_above_non_strict", "consistency", "ads_conversion_funnel_1d", """
+        SELECT IF(max(IF(funnel_type = 'strict', step2_cart_fav_users, NULL))
+                    > max(IF(funnel_type = 'non_strict', step2_cart_fav_users, NULL))
+                  OR max(IF(funnel_type = 'strict', step3_buy_users, NULL))
+                    > max(IF(funnel_type = 'non_strict', step3_buy_users, NULL)), 1, 0) AS bad,
+               concat('strict_step3=', max(IF(funnel_type = 'strict', step3_buy_users, NULL)),
+                      ' non_strict_step3=', max(IF(funnel_type = 'non_strict', step3_buy_users, NULL))) AS detail
+        FROM ${db}.ads_conversion_funnel_1d WHERE dt = '${dt}'"""),
 ]
 
 ADS_RETENTION_CHECKS = [
